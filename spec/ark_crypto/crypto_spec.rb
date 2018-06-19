@@ -1,6 +1,6 @@
 require "spec_helper"
 
-require 'ark-crypto/util/crypto'
+require 'ark_crypto/util/crypto'
 
 describe ArkCrypto::Util::Crypto do
   let(:message) { 'This is a message from Ruby' }

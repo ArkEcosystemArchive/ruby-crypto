@@ -17,7 +17,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'ark-crypto'
+gem 'ark_crypto'
 ```
 
 And then execute:
@@ -26,7 +26,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install ark-crypto
+    $ gem install ark_crypto
 
 ## Development
 

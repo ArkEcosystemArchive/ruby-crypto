@@ -1,7 +1,7 @@
 require "spec_helper"
 
-require 'ark-crypto/util/crypto'
-require 'ark-crypto/transaction_builder'
+require 'ark_crypto/util/crypto'
+require 'ark_crypto/transaction_builder'
 
 describe ArkCrypto::TransactionBuilder do
   let(:amount) { 133380000000 }

@@ -1,10 +1,10 @@
 # coding: utf-8
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "ark-crypto/version"
+require "ark_crypto/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "ark-ruby"
+  spec.name          = "ark_crypto"
   spec.version       = ArkCrypto::VERSION
   spec.authors       = ["Brian Faust"]
   spec.email         = ["hello@brianfaust.me"]
@@ -23,9 +23,7 @@ Gem::Specification.new do |spec|
       "public gem pushes."
   end
 
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(test|spec|features)/})
-  end
+  spec.files         = Dir.glob("lib/**/*.rb")
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
