@@ -72,14 +72,14 @@ module ArkCrypto
         out << [fee].pack('Q<')
 
         case type
-        when Enums::Types::SECOND_SIGNATURE
+        when Enums::Types::SECOND_SIGNATURE_REGISTRATION
           asset_signature_public_key = asset[:signature][:public_key]
           out << [asset_signature_public_key].pack('H*')
-        when Enums::Types::DELEGATE
+        when Enums::Types::DELEGATE_REGISTRATION
           out << asset[:delegate][:username]
         when Enums::Types::VOTE
           out << asset[:votes].join('')
-        when Enums::Types::MULTISIGNATURE
+        when Enums::Types::MULTI_SIGNATURE_REGISTRATION
           ms_asset = asset[:multisignature]
           out << [ms_asset[:min]].pack('C')
           out << [ms_asset[:lifetime]].pack('C')

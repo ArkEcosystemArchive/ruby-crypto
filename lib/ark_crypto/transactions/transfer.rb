@@ -1,4 +1,5 @@
 require 'ark_crypto/crypto'
+require 'ark_crypto/transactions/transaction'
 require 'ark_crypto/transactions/enums/fees'
 require 'ark_crypto/transactions/enums/types'
 

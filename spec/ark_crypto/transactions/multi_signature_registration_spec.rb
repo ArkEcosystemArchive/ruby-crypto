@@ -46,7 +46,7 @@ describe ArkCrypto::Transactions::MultiSignatureRegistration do
     end
 
     it 'has a fee that is the number of addresses in key group plus one' do
-      expect(subject.fee).to eq(4 * described_class::Transaction::Fee::MULTISIGNATURE_BASE)
+      expect(subject.fee).to eq(4 * ArkCrypto::Transactions::Enums::Fees::MULTI_SIGNATURE_REGISTRATION)
     end
   end
 end

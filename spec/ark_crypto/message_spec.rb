@@ -44,11 +44,11 @@ describe ArkCrypto::Message do
     end
   end
 
-  describe '#to_hash' do
+  describe '#to_params' do
     it 'should be ok' do
       dummy = described_class.from_hash(struct)
 
-      actual = dummy.to_hash
+      actual = dummy.to_params
 
       expect(actual).to eq(struct)
     end

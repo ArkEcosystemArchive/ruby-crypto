@@ -1,4 +1,5 @@
 require 'ark_crypto/crypto'
+require 'ark_crypto/transactions/transaction'
 require 'ark_crypto/transactions/enums/fees'
 require 'ark_crypto/transactions/enums/types'
 
@@ -10,8 +11,8 @@ module ArkCrypto
         second_key = ArkCrypto::Crypto.get_key(second_secret) if second_secret
 
         transaction = Transaction.new(
-          :type => Enums::Types::DELEGATE,
-          :fee => Enums::Fees::DELEGATE,
+          :type => Enums::Types::DELEGATE_REGISTRATION,
+          :fee => Enums::Fees::DELEGATE_REGISTRATION,
           :sender_public_key => key.public_key.unpack('H*').first,
           :amount => 0,
           :asset => {

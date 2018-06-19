@@ -38,14 +38,14 @@ module ArkCrypto
       key.verify_ecdsa_signature(BTC.from_hex(@signature), hash)
     end
 
-    def to_hash
+    def to_params
       { publickey: @public_key,
         signature: @signature,
         message: @message }
     end
 
     def to_json
-      self.to_hash.to_json
+      self.to_params.to_json
     end
   end
 end
