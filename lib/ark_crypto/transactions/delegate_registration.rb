@@ -1,6 +1,6 @@
 require 'ark_crypto/crypto'
-require 'ark_crypto/enums/fees'
-require 'ark_crypto/enums/types'
+require 'ark_crypto/transactions/enums/fees'
+require 'ark_crypto/transactions/enums/types'
 
 module ArkCrypto
   module Transactions

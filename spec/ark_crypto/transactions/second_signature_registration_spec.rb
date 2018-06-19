@@ -1,7 +1,7 @@
 require "spec_helper"
 
-require 'ark_crypto/util/crypto'
-require 'ark_crypto/transaction_builder'
+require 'ark_crypto/crypto'
+require 'ark_crypto/transactions/second_signature_registration'
 
 describe ArkCrypto::Transactions::SecondSignatureRegistration do
   let(:amount) { 133380000000 }
