@@ -1,6 +1,4 @@
 require 'ark_crypto/crypto'
-require 'btcruby/base58'
-require 'deep_hash_transform'
 
 module ArkCrypto
   class Message
