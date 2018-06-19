@@ -6,33 +6,37 @@ require 'ark_crypto/transactions/transfer'
 describe ArkCrypto::Transactions::Transfer do
   let(:amount) { 133380000000 }
   let(:recipient_id) { 'AXoXnFi4z1Z6aFvjEYkDVCtBGW2PaRiM25' }
-  let(:vendor_field) { 'This is a transaction from PHP' }
+  let(:vendor_field) { 'This is a transaction from Ruby' }
   let(:secret) { 'this is a top secret passphrase' }
-  let(:second_secret) { nil }
-  let(:dev_network_address) { '1e' }
-
-  shared_examples_for 'a transaction' do
-    it 'is valid' do
-      expect(ArkCrypto::Crypto.verify(subject)).to be_truthy
-    end
-  end
-
-  shared_examples_for 'a transaction signed twice' do
-    let(:second_public_key_address) { ArkCrypto::Crypto.get_key(second_secret).public_key.unpack('H*').first }
-
-    it 'is valid' do
-      expect(ArkCrypto::Crypto.verify(subject)).to be_truthy
-      expect(ArkCrypto::Crypto.second_verify(subject, second_public_key_address)).to be_truthy
-    end
-  end
+  let(:second_secret) { 'this is a top secret second passphrase' }
 
   describe '#create' do
-    subject { described_class.new.create(recipient_id, amount, vendor_field, secret, second_secret) }
+    it 'should be ok with a secret' do
+      transaction = described_class.new
+      .recipient_id(recipient_id)
+      .amount(amount)
+      .vendor_field(vendor_field)
+      .create
+      .sign(secret)
+      .get_struct
 
-    it_behaves_like 'a transaction'
+      expect(ArkCrypto::Crypto.verify(transaction)).to be_truthy
+    end
 
-    it_behaves_like 'a transaction signed twice' do
-      let(:second_secret) { 'this is a top secret second passphrase' }
+    it 'should be ok with a second secret' do
+      transaction = described_class.new
+      .recipient_id(recipient_id)
+      .amount(amount)
+      .vendor_field(vendor_field)
+      .create
+      .sign(secret)
+      .second_sign(second_secret)
+      .get_struct
+
+      second_public_key_address = ArkCrypto::Crypto.get_key(second_secret).public_key.unpack('H*').first
+
+      expect(ArkCrypto::Crypto.verify(transaction)).to be_truthy
+      expect(ArkCrypto::Crypto.second_verify(transaction, second_public_key_address)).to be_truthy
     end
   end
 end

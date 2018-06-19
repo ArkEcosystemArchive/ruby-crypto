@@ -38,14 +38,28 @@ module ArkCrypto
         @asset = asset
       end
 
-      def sign_and_create_id(key, second_key = nil)
+      def set_recipient_id(recipient_id)
+        @recipient_id = recipient_id
+      end
+
+      def set_asset(asset)
+        @asset = asset
+      end
+
+      def sign_and_create_id(secret)
+        key = ArkCrypto::Crypto.get_key(secret)
+        @sender_public_key = key.public_key.unpack('H*').first
+
         transaction_bytes = to_bytes
         @signature = key.ecdsa_signature(Digest::SHA256.digest(transaction_bytes)).unpack('H*').first
 
-        hashed_transaction_bytes_with_sig = Digest::SHA256.digest(to_bytes(false))
-
-        @sign_signature = second_key.ecdsa_signature(hashed_transaction_bytes_with_sig).unpack('H*').first if second_key
         @id = Digest::SHA256.digest(to_bytes(false, false)).unpack('H*').first
+      end
+
+      def second_sign(second_secret)
+        second_key = ArkCrypto::Crypto.get_key(second_secret)
+
+        @sign_signature = second_key.ecdsa_signature(Digest::SHA256.digest(to_bytes(false))).unpack('H*').first
       end
 
       def to_bytes(skip_signature = true, skip_second_signature = true)

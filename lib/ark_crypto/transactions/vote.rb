@@ -2,26 +2,39 @@ require 'ark_crypto/crypto'
 require 'ark_crypto/transactions/transaction'
 require 'ark_crypto/transactions/enums/fees'
 require 'ark_crypto/transactions/enums/types'
+require 'ark_crypto/transactions/utils/signing'
 
 module ArkCrypto
   module Transactions
     class Vote
-      def create(votes, secret, second_secret, network_address)
-        key = ArkCrypto::Crypto.get_key(secret)
-        second_key = ArkCrypto::Crypto.get_key(second_secret) if second_secret
+      include Utils::Signing
 
-        transaction = Transaction.new(
-          :type => Enums::Types::VOTE,
-          :fee => Enums::Fees::VOTE,
-          :sender_public_key => key.public_key.unpack('H*').first,
-          :recipient_id => ArkCrypto::Crypto.get_address(key, network_address),
+      def initialize
+        @type = Enums::Types::VOTE
+        @fee = Enums::Fees::VOTE
+      end
+
+      def votes(value)
+        @votes = value
+        self
+      end
+
+      def create
+        @transaction = Transaction.new(
+          :type => @type,
+          :fee => @fee,
           :amount => 0,
-          :asset => {:votes => votes}
+          :asset => {:votes => @votes}
         )
+        self
+      end
 
-        transaction.sign_and_create_id(key, second_key)
+      def sign(secret)
+        key = ArkCrypto::Crypto.get_key(secret)
+        @transaction.set_recipient_id(ArkCrypto::Crypto.get_address(key))
 
-        transaction
+        @transaction.sign_and_create_id(secret)
+        self
       end
     end
   end
