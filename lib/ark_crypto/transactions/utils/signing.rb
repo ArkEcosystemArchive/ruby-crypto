@@ -7,6 +7,11 @@ module ArkCrypto
   module Transactions
     module Utils
       module Signing
+        def network(network_address)
+          @network = network_address
+          self
+        end
+
         def sign(secret)
           @transaction.sign_and_create_id(secret)
           self
