@@ -2,6 +2,8 @@ require 'spec_helper'
 require 'ostruct'
 
 require 'ark_crypto/crypto'
+require 'ark_crypto/configuration/network'
+require 'ark_crypto/networks/devnet'
 require 'ark_crypto/builder/delegate_registration'
 
 describe ArkCrypto::Builder::DelegateRegistration do
@@ -10,6 +12,8 @@ describe ArkCrypto::Builder::DelegateRegistration do
   let(:username) { 'polo polo' }
 
   it 'should be ok with a secret' do
+    ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
+
     transaction = described_class.new
     .username(username)
     .create
@@ -20,6 +24,8 @@ describe ArkCrypto::Builder::DelegateRegistration do
   end
 
   it 'should be ok with a second secret' do
+    ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
+
     transaction = described_class.new
     .username(username)
     .create

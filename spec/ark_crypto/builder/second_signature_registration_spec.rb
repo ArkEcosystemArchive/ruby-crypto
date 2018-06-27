@@ -2,6 +2,8 @@ require 'spec_helper'
 require 'ostruct'
 
 require 'ark_crypto/crypto'
+require 'ark_crypto/configuration/network'
+require 'ark_crypto/networks/devnet'
 require 'ark_crypto/builder/second_signature_registration'
 
 describe ArkCrypto::Builder::SecondSignatureRegistration do
@@ -9,6 +11,8 @@ describe ArkCrypto::Builder::SecondSignatureRegistration do
   let(:second_secret) { 'this is a top secret second passphrase' }
 
   it 'should be ok with a second secret' do
+    ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
+
     transaction = described_class.new
     .create
     .set_second_secret(second_secret)

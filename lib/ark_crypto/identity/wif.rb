@@ -4,6 +4,8 @@ module ArkCrypto
   module Identity
     class WIF
       def self.from_secret(secret, network = nil)
+        network = network || ArkCrypto::Configuration::Network.get
+
         secret = Digest::SHA256.digest(secret)
 
         seed = [network.wif].pack('C*')

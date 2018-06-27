@@ -2,6 +2,8 @@ require 'spec_helper'
 require 'ostruct'
 
 require 'ark_crypto/crypto'
+require 'ark_crypto/configuration/network'
+require 'ark_crypto/networks/devnet'
 require 'ark_crypto/builder/transfer'
 
 describe ArkCrypto::Builder::Transfer do
@@ -12,6 +14,8 @@ describe ArkCrypto::Builder::Transfer do
   let(:second_secret) { 'this is a top secret second passphrase' }
 
   it 'should be ok with a secret' do
+    ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
+
     transaction = described_class.new
     .recipient_id(recipient_id)
     .amount(amount)
@@ -24,6 +28,8 @@ describe ArkCrypto::Builder::Transfer do
   end
 
   it 'should be ok with a second secret' do
+    ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
+
     transaction = described_class.new
     .recipient_id(recipient_id)
     .amount(amount)

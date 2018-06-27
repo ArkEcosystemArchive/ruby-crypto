@@ -11,7 +11,6 @@ module ArkCrypto
 
       def initialize
         @type = ArkCrypto::Enums::Types::TRANSFER
-        @fee = ArkCrypto::Enums::Fees::TRANSFER
       end
 
       def recipient_id(recipient_id)

@@ -1,4 +1,6 @@
 require 'ark_crypto/crypto'
+require 'ark_crypto/configuration/fee'
+require 'ark_crypto/configuration/network'
 require 'btcruby/base58'
 require 'deep_hash_transform'
 
@@ -29,7 +31,7 @@ module ArkCrypto
           asset: {}
         )
         @type = type
-        @fee = fee
+        @fee = ArkCrypto::Configuration::Fee.get(@type)
         @sender_public_key = sender_public_key
         @recipient_id = recipient_id
         @amount = amount

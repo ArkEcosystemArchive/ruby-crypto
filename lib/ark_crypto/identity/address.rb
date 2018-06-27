@@ -1,11 +1,11 @@
 require 'btcruby'
-require 'ark_crypto/networks/mainnet'
-require 'ark_crypto/networks/devnet'
+require 'ark_crypto/configuration/network'
 
 module ArkCrypto
   module Identity
     class Address
       def self.from_secret(secret, network = nil)
+
         private_key = PrivateKey.from_secret(secret)
 
         self.from_private_key(private_key, network)
@@ -18,7 +18,7 @@ module ArkCrypto
       end
 
       def self.from_private_key(private_key, network = nil)
-        network = network ? network : ArkCrypto::Networks::Devnet
+        network = network || ArkCrypto::Configuration::Network.get
 
         public_key = Digest::RMD160.digest(private_key.public_key)
 

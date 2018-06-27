@@ -11,7 +11,6 @@ module ArkCrypto
 
       def initialize
         @type = ArkCrypto::Enums::Types::DELEGATE_REGISTRATION
-        @fee = ArkCrypto::Enums::Fees::DELEGATE_REGISTRATION
       end
 
       def username(username)

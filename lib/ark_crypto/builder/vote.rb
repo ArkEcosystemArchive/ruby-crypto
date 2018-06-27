@@ -10,9 +10,7 @@ module ArkCrypto
       include Utils::Signing
 
       def initialize
-        @network = '17'
         @type = ArkCrypto::Enums::Types::VOTE
-        @fee = ArkCrypto::Enums::Fees::VOTE
       end
 
       def votes(value)
@@ -32,7 +30,7 @@ module ArkCrypto
 
       def sign(secret)
         key = ArkCrypto::Crypto.get_key(secret)
-        @transaction.set_recipient_id(ArkCrypto::Crypto.get_address(key, @network))
+        @transaction.set_recipient_id(ArkCrypto::Crypto.get_address(key))
 
         @transaction.sign_and_create_id(secret)
         self

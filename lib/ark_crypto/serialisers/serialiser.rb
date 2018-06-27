@@ -10,7 +10,7 @@ module ArkCrypto
       def serialise
         bytes = ''
         bytes << [0xff].pack('C')
-        bytes << [@transaction[:version] ? @transaction[:version] : 0x01].pack('C')
+        bytes << [@transaction[:version] ||  0x01].pack('C')
         bytes << [@transaction[:network]].pack('C')
         bytes << [@transaction[:type]].pack('C')
         bytes << [@transaction[:timestamp]].pack('V')

@@ -2,6 +2,8 @@ require 'spec_helper'
 require 'ostruct'
 
 require 'ark_crypto/crypto'
+require 'ark_crypto/configuration/network'
+require 'ark_crypto/networks/devnet'
 require 'ark_crypto/builder/vote'
 
 describe ArkCrypto::Builder::Vote do
@@ -10,6 +12,8 @@ describe ArkCrypto::Builder::Vote do
   let(:second_secret) { 'this is a top secret second passphrase' }
 
   it 'should be ok with a secret' do
+    ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
+
     transaction = described_class.new
     .votes(["+#{delegate}"])
     .create
@@ -20,6 +24,8 @@ describe ArkCrypto::Builder::Vote do
   end
 
   it 'should be ok with a second secret' do
+    ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
+
     transaction = described_class.new
     .votes(["+#{delegate}"])
     .create

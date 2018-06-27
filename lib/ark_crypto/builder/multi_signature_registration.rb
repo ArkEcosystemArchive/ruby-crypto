@@ -11,7 +11,6 @@ module ArkCrypto
 
       def initialize
         @type = ArkCrypto::Enums::Types::MULTI_SIGNATURE_REGISTRATION
-        @fee = ArkCrypto::Enums::Fees::MULTI_SIGNATURE_REGISTRATION
       end
 
       def set_keysgroup(keysgroup)
@@ -32,7 +31,7 @@ module ArkCrypto
       def create
         @transaction = Transaction.new(
           :type => @type,
-          :fee => (@keysgroup.size + 1) * @fee,
+          :fee => (@keysgroup.size + 1) * ArkCrypto::Configuration::Fee.get(@type),
           :amount => 0,
           :asset => {
             :multisignature => {

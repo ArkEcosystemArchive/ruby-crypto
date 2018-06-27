@@ -1,9 +1,10 @@
 require 'spec_helper'
 require 'ostruct'
-require 'ostruct'
 
 require 'btcruby'
 require 'ark_crypto/crypto'
+require 'ark_crypto/configuration/network'
+require 'ark_crypto/networks/devnet'
 require 'ark_crypto/deserialisers/transfer'
 
 describe ArkCrypto::Deserialisers::Transfer do
@@ -11,6 +12,7 @@ describe ArkCrypto::Deserialisers::Transfer do
     it 'should be ok' do
       transaction = JSON.parse!(File.read('spec/fixtures/transactions/transfer.json'), object_class: OpenStruct)
 
+      ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
       deserialiser = ArkCrypto::Deserialisers::Transfer.new(transaction)
 
       actual = deserialiser.deserialise

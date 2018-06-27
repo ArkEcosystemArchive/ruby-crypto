@@ -3,6 +3,8 @@ require 'ostruct'
 
 require 'btcruby'
 require 'ark_crypto/crypto'
+require 'ark_crypto/configuration/network'
+require 'ark_crypto/networks/devnet'
 require 'ark_crypto/deserialisers/second_signature_registration'
 
 describe ArkCrypto::Deserialisers::SecondSignatureRegistration do
@@ -10,6 +12,7 @@ describe ArkCrypto::Deserialisers::SecondSignatureRegistration do
     it 'should be ok' do
       transaction = JSON.parse!(File.read('spec/fixtures/transactions/second_signature_registration.json'), object_class: OpenStruct)
 
+      ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
       deserialiser = ArkCrypto::Deserialisers::SecondSignatureRegistration.new(transaction)
 
       actual = deserialiser.deserialise
