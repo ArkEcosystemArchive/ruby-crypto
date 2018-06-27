@@ -1,10 +1,10 @@
 require 'ark_crypto/crypto'
-require 'ark_crypto/transactions/transaction'
-require 'ark_crypto/transactions/enums/fees'
-require 'ark_crypto/transactions/enums/types'
+require 'ark_crypto/enums/fees'
+require 'ark_crypto/enums/types'
+require 'ark_crypto/builder/transaction'
 
 module ArkCrypto
-  module Transactions
+  module Builder
     module Utils
       module Signing
         def network(network_address)

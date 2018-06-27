@@ -1,9 +1,9 @@
 require "spec_helper"
 
 require 'ark_crypto/crypto'
-require 'ark_crypto/transactions/multi_signature_registration'
+require 'ark_crypto/builder/multi_signature_registration'
 
-describe ArkCrypto::Transactions::MultiSignatureRegistration do
+describe ArkCrypto::Builder::MultiSignatureRegistration do
   let(:keysgroup) do
     %w(
         +03a02b9d5fdd1307c2ee4652ba54d492d1fd11a7d1bb3f3a44c4a05e79f19de933

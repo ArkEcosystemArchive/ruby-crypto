@@ -7,6 +7,7 @@ require 'ark_crypto/identity/wif'
 require 'ark_crypto/networks/mainnet'
 require 'ark_crypto/networks/devnet'
 require 'ark_crypto/networks/testnet'
+require 'ark_crypto/deserialisers/transfer'
 
 module ArkCrypto
   class << self

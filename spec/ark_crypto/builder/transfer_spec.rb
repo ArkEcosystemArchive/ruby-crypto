@@ -1,16 +1,20 @@
 require "spec_helper"
 
 require 'ark_crypto/crypto'
-require 'ark_crypto/transactions/delegate_registration'
+require 'ark_crypto/builder/transfer'
 
-describe ArkCrypto::Transactions::DelegateRegistration do
+describe ArkCrypto::Builder::Transfer do
+  let(:amount) { 133380000000 }
+  let(:recipient_id) { 'AXoXnFi4z1Z6aFvjEYkDVCtBGW2PaRiM25' }
+  let(:vendor_field) { 'This is a transaction from Ruby' }
   let(:secret) { 'this is a top secret passphrase' }
   let(:second_secret) { 'this is a top secret second passphrase' }
-  let(:username) { 'polo polo' }
 
   it 'should be ok with a secret' do
     transaction = described_class.new
-    .username(username)
+    .recipient_id(recipient_id)
+    .amount(amount)
+    .vendor_field(vendor_field)
     .create
     .sign(secret)
     .get_struct
@@ -20,7 +24,9 @@ describe ArkCrypto::Transactions::DelegateRegistration do
 
   it 'should be ok with a second secret' do
     transaction = described_class.new
-    .username(username)
+    .recipient_id(recipient_id)
+    .amount(amount)
+    .vendor_field(vendor_field)
     .create
     .sign(secret)
     .second_sign(second_secret)

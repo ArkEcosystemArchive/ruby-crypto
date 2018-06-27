@@ -1,18 +1,18 @@
 require 'ark_crypto/crypto'
-require 'ark_crypto/transactions/transaction'
-require 'ark_crypto/transactions/enums/fees'
-require 'ark_crypto/transactions/enums/types'
-require 'ark_crypto/transactions/utils/signing'
+require 'ark_crypto/enums/fees'
+require 'ark_crypto/enums/types'
+require 'ark_crypto/builder/transaction'
+require 'ark_crypto/builder/utils/signing'
 
 module ArkCrypto
-  module Transactions
+  module Builder
     class Vote
       include Utils::Signing
 
       def initialize
         @network = '17'
-        @type = Enums::Types::VOTE
-        @fee = Enums::Fees::VOTE
+        @type = ArkCrypto::Enums::Types::VOTE
+        @fee = ArkCrypto::Enums::Fees::VOTE
       end
 
       def votes(value)

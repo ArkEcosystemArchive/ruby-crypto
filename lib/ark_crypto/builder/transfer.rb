@@ -1,17 +1,17 @@
 require 'ark_crypto/crypto'
-require 'ark_crypto/transactions/transaction'
-require 'ark_crypto/transactions/enums/fees'
-require 'ark_crypto/transactions/enums/types'
-require 'ark_crypto/transactions/utils/signing'
+require 'ark_crypto/enums/fees'
+require 'ark_crypto/enums/types'
+require 'ark_crypto/builder/transaction'
+require 'ark_crypto/builder/utils/signing'
 
 module ArkCrypto
-  module Transactions
+  module Builder
     class Transfer
       include Utils::Signing
 
       def initialize
-        @type = Enums::Types::TRANSFER
-        @fee = Enums::Fees::TRANSFER
+        @type = ArkCrypto::Enums::Types::TRANSFER
+        @fee = ArkCrypto::Enums::Fees::TRANSFER
       end
 
       def recipient_id(recipient_id)

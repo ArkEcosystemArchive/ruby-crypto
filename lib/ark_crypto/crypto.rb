@@ -23,5 +23,9 @@ module ArkCrypto
       public_only_key = BTC::Key.new(:public_key => [second_public_key_hex].pack('H*'))
       public_only_key.verify_ecdsa_signature([transaction.sign_signature].pack('H*'), Digest::SHA256.digest(transaction.to_bytes(false)))
     end
+
+    def self.parseSignatures(serialized, transaction, start_offset)
+      # ...
+    end
   end
 end

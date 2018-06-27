@@ -1,17 +1,17 @@
 require 'ark_crypto/crypto'
-require 'ark_crypto/transactions/transaction'
-require 'ark_crypto/transactions/enums/fees'
-require 'ark_crypto/transactions/enums/types'
-require 'ark_crypto/transactions/utils/signing'
+require 'ark_crypto/enums/fees'
+require 'ark_crypto/enums/types'
+require 'ark_crypto/builder/transaction'
+require 'ark_crypto/builder/utils/signing'
 
 module ArkCrypto
-  module Transactions
+  module Builder
     class DelegateRegistration
       include Utils::Signing
 
       def initialize
-        @type = Enums::Types::DELEGATE_REGISTRATION
-        @fee = Enums::Fees::DELEGATE_REGISTRATION
+        @type = ArkCrypto::Enums::Types::DELEGATE_REGISTRATION
+        @fee = ArkCrypto::Enums::Fees::DELEGATE_REGISTRATION
       end
 
       def username(username)

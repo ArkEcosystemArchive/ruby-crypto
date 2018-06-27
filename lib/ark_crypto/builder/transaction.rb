@@ -3,7 +3,7 @@ require 'btcruby/base58'
 require 'deep_hash_transform'
 
 module ArkCrypto
-  module Transactions
+  module Builder
     class Transaction
       attr_reader *%i(
         amount
