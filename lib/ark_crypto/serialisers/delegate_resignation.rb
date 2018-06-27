@@ -4,7 +4,7 @@ module ArkCrypto
   module Serialisers
     class DelegateResignation < Serialiser
       def handle(bytes)
-        raise NotImplementedError
+        bytes
       end
     end
   end
