@@ -24,8 +24,74 @@ module ArkCrypto
       public_only_key.verify_ecdsa_signature([transaction.sign_signature].pack('H*'), Digest::SHA256.digest(transaction.to_bytes(false)))
     end
 
-    def self.parseSignatures(serialized, transaction, start_offset)
-      # ...
+    def self.parse_signatures(serialized, transaction, start_offset)
+      signature = serialized[start_offset..-1]
+
+      multi_signature_offset = 0
+
+      if !signature.length
+        transaction.delete(:signature)
+      else
+        # First Signature
+        signature_length = signature[2, 2].to_i(16) + 2
+        transaction[:signature] = serialized[start_offset, signature_length * 2]
+
+        # Multi Signature
+        multi_signature_offset += signature_length * 2
+
+        # Second Signature
+        transaction[:second_signature] = serialized[(start_offset + signature_length * 2)..-1]
+
+        if transaction[:second_signature].empty?
+          transaction.delete(:second_signature)
+        else
+          if ('ff' === transaction[:second_signature][0, 2])
+            transaction.delete(:second_signature)
+          else
+            # Second Signature
+            second_signature_length = signature[2, 2].to_i(16) + 2
+            transaction[:second_signature] = transaction[:second_signature][0, second_signature_length * 2]
+
+            # Multi Signature
+            multi_signature_offset += second_signature_length * 2
+          end
+        end
+
+        # All Signatures
+        signatures = serialized[(start_offset + multi_signature_offset)..-1]
+
+        if signatures.empty?
+          return transaction
+        end
+
+        if signatures[0, 2] != 'ff'
+          return transaction
+        end
+
+        # Parse Multi Signatures
+        signatures = signatures[2..-1]
+        transaction[:signatures] = []
+
+        more_signatures = true
+
+        while more_signatures
+          if signatures.empty?
+            break
+          end
+
+          multi_signature_length = signatures[2, 2].to_i(16) + 2
+
+          if multi_signature_length > 0
+            transaction[:signatures].push(signatures[0, multi_signature_length * 2])
+          else
+            more_signatures = false
+          end
+
+          signatures = signatures[(multi_signature_length * 2)..-1]
+        end
+
+        transaction
+      end
     end
   end
 end
