@@ -37,10 +37,10 @@ module ArkCrypto
           bytes << BTC::Data.data_from_hex(@transaction[:signature])
         end
 
-        if @transaction[:second_signature]
-          bytes << BTC::Data.data_from_hex(@transaction[:second_signature])
-        elsif @transaction[:sign_signature]
-          bytes << BTC::Data.data_from_hex(@transaction[:sign_signature])
+        if @transaction[:secondSignature]
+          bytes << BTC::Data.data_from_hex(@transaction[:secondSignature])
+        elsif @transaction[:signSignature]
+          bytes << BTC::Data.data_from_hex(@transaction[:signSignature])
         end
 
         if @transaction[:signatures]
