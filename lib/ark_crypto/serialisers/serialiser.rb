@@ -1,7 +1,7 @@
 module ArkCrypto
   module Serialisers
-    class AbstractSerialiser
-      def new(transaction)
+    class Serialiser
+      def initialize(transaction)
         @transaction = transaction
       end
 

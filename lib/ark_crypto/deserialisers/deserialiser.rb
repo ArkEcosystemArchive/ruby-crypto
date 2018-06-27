@@ -41,15 +41,15 @@ module ArkCrypto
           end
 
           if transaction[:type] === 3
-            transaction[:recipientId] = ArkCrypto::Identity::Address::from_public_key(@transaction[:senderPublicKey]);
+            transaction[:recipient_id] = ArkCrypto::Identity::Address::from_public_key(@transaction[:senderPublicKey]);
           end
 
           if transaction[:type] === 1
-            transaction[:recipientId] = ArkCrypto::Identity::Address::from_public_key(@transaction[:senderPublicKey]);
+            transaction[:recipient_id] = ArkCrypto::Identity::Address::from_public_key(@transaction[:senderPublicKey]);
           end
 
           if transaction[:type] === 4
-            transaction[:recipientId] = ArkCrypto::Identity::Address::from_public_key(@transaction[:senderPublicKey]);
+            transaction[:recipient_id] = ArkCrypto::Identity::Address::from_public_key(@transaction[:senderPublicKey]);
             transaction[:asset][:multisignature][:keysgroup] = transaction[:asset][:multisignature][:keysgroup].map! {|key| '+' + key }
           end
 

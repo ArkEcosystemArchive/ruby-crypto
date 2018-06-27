@@ -18,7 +18,6 @@ module ArkCrypto
         i = 0
         while i < count
           index_start = asset_offset + 6 + i * 66
-          index_end = asset_offset + 6 + (i + 1) * 66
 
           transaction[:asset][:multisignature][:keysgroup].push(@serialized[index_start, 66])
 
