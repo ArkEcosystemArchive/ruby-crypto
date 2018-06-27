@@ -7,7 +7,7 @@ require 'ark_crypto/serialisers/second_signature_registration'
 
 describe ArkCrypto::Serialisers::SecondSignatureRegistration do
   describe '#serialise' do
-    skip it 'should be ok' do
+    it 'should be ok' do
       transaction = JSON.parse!(File.read('spec/fixtures/transactions/second_signature_registration.json'), object_class: OpenStruct)
 
       serialiser = ArkCrypto::Serialisers::SecondSignatureRegistration.new(transaction)
