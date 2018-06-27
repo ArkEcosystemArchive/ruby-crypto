@@ -1,4 +1,5 @@
 require 'btcruby'
+require 'ark_crypto/networks/mainnet'
 
 module ArkCrypto
   module Identity
@@ -16,6 +17,8 @@ module ArkCrypto
       end
 
       def self.from_private_key(private_key, network = nil)
+        network = network ? network : ArkCrypto::Networks::Mainnet
+
         public_key = Digest::RMD160.digest(private_key.public_key)
 
         BTC::Base58.base58check_from_data([network.version.to_i(16)].pack('c') + public_key)
