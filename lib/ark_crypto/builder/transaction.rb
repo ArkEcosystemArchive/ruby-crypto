@@ -52,15 +52,18 @@ module ArkCrypto
         key = ArkCrypto::Crypto.get_key(secret)
         @sender_public_key = key.public_key.unpack('H*').first
 
+        # TODO: make use of ArkCrypto::Crypto.get_bytes
         transaction_bytes = to_bytes
         @signature = key.ecdsa_signature(Digest::SHA256.digest(transaction_bytes)).unpack('H*').first
 
+        # TODO: make use of ArkCrypto::Crypto.get_id
         @id = Digest::SHA256.digest(to_bytes(false, false)).unpack('H*').first
       end
 
       def second_sign(second_secret)
         second_key = ArkCrypto::Crypto.get_key(second_secret)
 
+        # TODO: make use of ArkCrypto::Crypto.get_bytes
         @sign_signature = second_key.ecdsa_signature(Digest::SHA256.digest(to_bytes(false))).unpack('H*').first
       end
 

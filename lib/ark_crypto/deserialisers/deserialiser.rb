@@ -58,7 +58,7 @@ module ArkCrypto
           end
 
           if !transaction[:id]
-            transaction[:id] = @transaction[:id]
+            transaction[:id] = ArkCrypto::Crypto.get_id(transaction)
           end
         end
 
