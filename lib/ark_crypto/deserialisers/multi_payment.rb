@@ -17,7 +17,7 @@ module ArkCrypto
           recipient_id = @binary.unpack("H#{(offset + 1) * 2}H42").last
 
           payment = {
-            amount: @binary.unpack("C#{asset_offset / 2}Q<").last
+            amount: @binary.unpack("C#{asset_offset / 2}Q<").last,
             recipient_id: BTC::Base58.base58check_from_data([recipient_id].pack('H*'))
           }
 
