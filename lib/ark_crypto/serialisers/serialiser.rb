@@ -10,9 +10,9 @@ module ArkCrypto
       def serialise
         bytes = ''
         bytes << [0xff].pack('C')
-        bytes << [@transaction[:version] ? @transaction[:version] : 0x01].pack('c')
-        bytes << [@transaction[:network]].pack('c')
-        bytes << [@transaction[:type]].pack('c')
+        bytes << [@transaction[:version] ? @transaction[:version] : 0x01].pack('C')
+        bytes << [@transaction[:network]].pack('C')
+        bytes << [@transaction[:type]].pack('C')
         bytes << [@transaction[:timestamp]].pack('V')
         bytes << [@transaction[:senderPublicKey]].pack('H*')
         bytes << [@transaction[:fee]].pack('Q<')
@@ -20,15 +20,15 @@ module ArkCrypto
         if @transaction[:vendorField]
           vendor_field_length = @transaction[:vendorField].length
 
-          bytes << [vendor_field_length].pack('c')
+          bytes << [vendor_field_length].pack('C')
           bytes << @transaction[:vendorField]
         elsif @transaction[:vendorFieldHex]
           vendor_field_hex_length = @transaction[:vendorFieldHex].length
 
-          bytes << [vendor_field_hex_length / 2].pack('c')
+          bytes << [vendor_field_hex_length / 2].pack('C')
           bytes << @transaction[:vendorFieldHex]
         else
-          bytes << [0x00].pack('c')
+          bytes << [0x00].pack('C')
         end
 
         transaction = self.handle(bytes)

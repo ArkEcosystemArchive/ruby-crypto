@@ -7,7 +7,7 @@ require 'ark_crypto/serialisers/vote'
 
 describe ArkCrypto::Serialisers::Vote do
   describe '#serialise' do
-    skip it 'should be ok' do
+    it 'should be ok' do
       transaction = JSON.parse!(File.read('spec/fixtures/transactions/vote.json'), object_class: OpenStruct)
 
       serialiser = ArkCrypto::Serialisers::Vote.new(transaction)
