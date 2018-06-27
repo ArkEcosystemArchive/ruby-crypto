@@ -1,0 +1,38 @@
+require "spec_helper"
+
+require 'ark_crypto/identity/address'
+require 'ark_crypto/identity/private_key'
+require 'ark_crypto/networks/devnet'
+
+describe ArkCrypto::Identity::Address do
+  let(:secret) { 'this is a top secret passphrase' }
+  let(:address) { 'D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib' }
+  let(:public_key) { '034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed192' }
+  let(:network) { ArkCrypto::Networks::Devnet }
+
+  describe '#from_secret' do
+    it 'should be ok' do
+      actual = described_class.from_secret(secret, network)
+
+      expect(actual).to eq(address)
+    end
+  end
+
+  describe '#from_public_key' do
+    it 'should be ok' do
+      actual = described_class.from_public_key(public_key, network)
+
+      expect(actual).to eq(address)
+    end
+  end
+
+  describe '#from_private_key' do
+    it 'should be ok' do
+      private_key = ArkCrypto::Identity::PrivateKey.from_secret(secret)
+
+      actual = described_class.from_private_key(private_key, network)
+
+      expect(actual).to eq(address)
+    end
+  end
+end
