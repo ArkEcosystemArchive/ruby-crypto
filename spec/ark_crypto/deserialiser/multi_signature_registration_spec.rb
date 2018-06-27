@@ -55,20 +55,6 @@ describe ArkCrypto::Deserialisers::MultiSignatureRegistration do
       expect(actual[:sign_signature]).to eq(transaction[:signSignature])
       expect(actual[:signatures]).to eq(transaction[:signatures])
       expect(actual[:asset]).to eq(transaction[:asset])
-
-      # expect(actual[:version]).to eq(transaction[:version])
-      # expect(actual[:network]).to eq(transaction[:network])
-      # expect(actual[:type]).to eq(transaction[:type])
-      # expect(actual[:timestamp]).to eq(transaction[:timestamp])
-      # expect(actual[:senderPublicKey]).to eq(transaction[:senderPublicKey])
-      # expect(actual[:fee]).to eq(transaction[:fee])
-      # expect(actual[:vendorFieldHex]).to eq(transaction[:vendorFieldHex])
-      # expect(actual[:amount]).to eq(transaction[:amount])
-      # expect(actual[:expiration]).to eq(transaction[:expiration])
-      # expect(actual[:recipientId]).to eq(transaction[:recipientId])
-      # expect(actual[:signature]).to eq(transaction[:signature])
-      # expect(actual[:vendorField]).to eq(transaction[:vendorField])
-      # expect(actual[:id]).to eq(transaction[:id])
     end
   end
 end
