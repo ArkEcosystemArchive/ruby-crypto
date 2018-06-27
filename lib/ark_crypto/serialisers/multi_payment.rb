@@ -4,7 +4,7 @@ module ArkCrypto
   module Serialisers
     class MultiPayment < Serialiser
       def handle(bytes)
-        bytes
+        raise NotImplementedError
       end
     end
   end

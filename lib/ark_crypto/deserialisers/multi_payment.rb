@@ -4,7 +4,7 @@ module ArkCrypto
   module Deserialisers
     class MultiPayment < Deserialiser
       def handle(asset_offset, transaction)
-        transaction
+        raise NotImplementedError
       end
     end
   end

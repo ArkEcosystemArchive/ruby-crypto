@@ -4,7 +4,7 @@ module ArkCrypto
   module Deserialisers
     class DelegateResignation < Deserialiser
       def handle(asset_offset, transaction)
-        ArkCrypto::Crypto::parse_signatures(@serialized, transaction, asset_offset)
+        raise NotImplementedError
       end
     end
   end

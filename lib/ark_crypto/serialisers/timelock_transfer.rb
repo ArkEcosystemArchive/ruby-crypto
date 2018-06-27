@@ -4,7 +4,7 @@ module ArkCrypto
   module Serialisers
     class TimelockTransfer < Serialiser
       def handle(bytes)
-        bytes
+        raise NotImplementedError
       end
     end
   end
