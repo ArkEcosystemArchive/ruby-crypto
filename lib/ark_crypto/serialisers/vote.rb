@@ -1,8 +1,10 @@
+require 'ark_crypto/serialisers/serialiser'
+
 module ArkCrypto
   module Serialisers
-    class Vote
-      def self.handle(bytes)
-        # ...
+    class Vote < Serialiser
+      def handle(bytes)
+        bytes
       end
     end
   end

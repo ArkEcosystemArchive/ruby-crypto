@@ -1,8 +1,10 @@
+require 'ark_crypto/deserialisers/deserialiser'
+
 module ArkCrypto
   module Deserialisers
-    class DelegateRegistration
-      def self.handle(asset_offset, transaction)
-        # ...
+    class DelegateRegistration < Deserialiser
+      def handle(asset_offset, transaction)
+        transaction
       end
     end
   end

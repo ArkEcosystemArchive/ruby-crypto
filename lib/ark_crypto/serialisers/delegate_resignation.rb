@@ -1,8 +1,10 @@
+require 'ark_crypto/serialisers/serialiser'
+
 module ArkCrypto
   module Serialisers
-    class DelegateResignation
-      def self.handle(bytes)
-        # ...
+    class DelegateResignation < Serialiser
+      def handle(bytes)
+        bytes
       end
     end
   end

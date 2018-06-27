@@ -1,8 +1,10 @@
+require 'ark_crypto/deserialisers/deserialiser'
+
 module ArkCrypto
   module Deserialisers
-    class SecondSignatureRegistration
-      def self.handle(asset_offset, transaction)
-        # ...
+    class SecondSignatureRegistration < Deserialiser
+      def handle(asset_offset, transaction)
+        transaction
       end
     end
   end
