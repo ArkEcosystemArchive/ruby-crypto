@@ -7,7 +7,7 @@ require 'ark_crypto/serialisers/timelock_transfer'
 
 describe ArkCrypto::Serialisers::TimelockTransfer do
   describe '#serialise' do
-    it 'should be ok' do
+    skip it 'should be ok' do
       transaction = JSON.parse!(File.read('spec/fixtures/transactions/timelock_transfer.json'), object_class: OpenStruct)
 
       serialiser = ArkCrypto::Serialisers::TimelockTransfer.new(transaction)
