@@ -1,14 +1,15 @@
-require "spec_helper"
+require 'spec_helper'
+require 'ostruct'
 
 require 'btcruby'
 require 'ark_crypto/crypto'
 require 'ark_crypto/deserialisers/multi_payment'
 
 describe ArkCrypto::Deserialisers::MultiPayment do
-  let(:transaction) {}
-
   describe '#deserialise' do
     it 'should be ok' do
+      transaction = JSON.parse!(File.read('spec/fixtures/transactions/multi_payment.json'), object_class: OpenStruct)
+
       deserialiser = ArkCrypto::Deserialisers::MultiPayment.new(transaction)
 
       actual = deserialiser.deserialise

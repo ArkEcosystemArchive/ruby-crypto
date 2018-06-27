@@ -1,4 +1,5 @@
-require "spec_helper"
+require 'spec_helper'
+require 'ostruct'
 
 require 'ark_crypto/crypto'
 require 'ark_crypto/builder/vote'

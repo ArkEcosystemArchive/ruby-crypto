@@ -1,4 +1,5 @@
-require "spec_helper"
+require 'spec_helper'
+require 'ostruct'
 
 require 'ark_crypto/identity/public_key'
 require 'ark_crypto/identity/private_key'

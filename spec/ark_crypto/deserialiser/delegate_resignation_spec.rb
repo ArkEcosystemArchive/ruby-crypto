@@ -1,14 +1,15 @@
-require "spec_helper"
+require 'spec_helper'
+require 'ostruct'
 
 require 'btcruby'
 require 'ark_crypto/crypto'
 require 'ark_crypto/deserialisers/delegate_resignation'
 
 describe ArkCrypto::Deserialisers::DelegateResignation do
-  let(:transaction) {}
-
   describe '#deserialise' do
     it 'should be ok' do
+      transaction = JSON.parse!(File.read('spec/fixtures/transactions/delegate_resignation.json'), object_class: OpenStruct)
+
       deserialiser = ArkCrypto::Deserialisers::DelegateResignation.new(transaction)
 
       actual = deserialiser.deserialise
