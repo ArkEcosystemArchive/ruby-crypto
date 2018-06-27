@@ -7,7 +7,7 @@ require 'ark_crypto/serialisers/delegate_registration'
 
 describe ArkCrypto::Serialisers::DelegateRegistration do
   describe '#serialise' do
-    skip it 'should be ok' do
+    it 'should be ok' do
       transaction = JSON.parse!(File.read('spec/fixtures/transactions/delegate_registration.json'), object_class: OpenStruct)
 
       serialiser = ArkCrypto::Serialisers::DelegateRegistration.new(transaction)
