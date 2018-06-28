@@ -7,13 +7,13 @@ require 'ark_crypto/configuration/network'
 require 'ark_crypto/networks/devnet'
 require 'ark_crypto/serialisers/multi_payment'
 
-describe ArkCrypto::Serialisers::MultiPayment do
+describe ArkEcosystem::Crypto::Serialisers::MultiPayment do
   describe '#serialise' do
     skip it 'should be ok' do
       transaction = JSON.parse!(File.read('spec/fixtures/transactions/multi_payment.json'), object_class: OpenStruct)
 
-      ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
-      serialiser = ArkCrypto::Serialisers::MultiPayment.new(transaction)
+      ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
+      serialiser = ArkEcosystem::Crypto::Serialisers::MultiPayment.new(transaction)
 
       actual = serialiser.serialise
 

@@ -7,13 +7,13 @@ require 'ark_crypto/configuration/network'
 require 'ark_crypto/networks/devnet'
 require 'ark_crypto/deserialisers/transfer'
 
-describe ArkCrypto::Deserialisers::Transfer do
+describe ArkEcosystem::Crypto::Deserialisers::Transfer do
   describe '#deserialise' do
     it 'should be ok' do
       transaction = JSON.parse!(File.read('spec/fixtures/transactions/transfer.json'), object_class: OpenStruct)
 
-      ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
-      deserialiser = ArkCrypto::Deserialisers::Transfer.new(transaction)
+      ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
+      deserialiser = ArkEcosystem::Crypto::Deserialisers::Transfer.new(transaction)
 
       actual = deserialiser.deserialise
 

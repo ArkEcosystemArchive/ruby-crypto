@@ -3,7 +3,7 @@ require 'ostruct'
 
 require 'ark_crypto/message'
 
-describe ArkCrypto::Message do
+describe ArkEcosystem::Crypto::Message do
   let(:message) { 'This is a message from Ruby' }
   let(:secret) { 'this is a top secret passphrase' }
   let(:public_key) { '034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed192' }

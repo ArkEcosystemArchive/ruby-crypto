@@ -7,13 +7,13 @@ require 'ark_crypto/configuration/network'
 require 'ark_crypto/networks/devnet'
 require 'ark_crypto/serialisers/vote'
 
-describe ArkCrypto::Serialisers::Vote do
+describe ArkEcosystem::Crypto::Serialisers::Vote do
   describe '#serialise' do
     it 'should be ok' do
       transaction = JSON.parse!(File.read('spec/fixtures/transactions/vote.json'), object_class: OpenStruct)
 
-      ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
-      serialiser = ArkCrypto::Serialisers::Vote.new(transaction)
+      ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
+      serialiser = ArkEcosystem::Crypto::Serialisers::Vote.new(transaction)
 
       actual = serialiser.serialise
 

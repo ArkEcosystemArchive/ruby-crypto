@@ -6,7 +6,7 @@ require 'ark_crypto/configuration/network'
 require 'ark_crypto/networks/devnet'
 require 'ark_crypto/builder/transfer'
 
-describe ArkCrypto::Builder::Transfer do
+describe ArkEcosystem::Crypto::Builder::Transfer do
   let(:amount) { 133380000000 }
   let(:recipient_id) { 'AXoXnFi4z1Z6aFvjEYkDVCtBGW2PaRiM25' }
   let(:vendor_field) { 'This is a transaction from Ruby' }
@@ -14,7 +14,7 @@ describe ArkCrypto::Builder::Transfer do
   let(:second_secret) { 'this is a top secret second passphrase' }
 
   it 'should be ok with a secret' do
-    ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
+    ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
 
     transaction = described_class.new
     .recipient_id(recipient_id)
@@ -24,11 +24,11 @@ describe ArkCrypto::Builder::Transfer do
     .sign(secret)
     .get_struct
 
-    expect(ArkCrypto::Crypto.verify(transaction)).to be_truthy
+    expect(ArkEcosystem::Crypto::Crypto.verify(transaction)).to be_truthy
   end
 
   it 'should be ok with a second secret' do
-    ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
+    ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
 
     transaction = described_class.new
     .recipient_id(recipient_id)
@@ -39,9 +39,9 @@ describe ArkCrypto::Builder::Transfer do
     .second_sign(second_secret)
     .get_struct
 
-    second_public_key_address = ArkCrypto::Crypto.get_key(second_secret).public_key.unpack('H*').first
+    second_public_key_address = ArkEcosystem::Crypto::Crypto.get_key(second_secret).public_key.unpack('H*').first
 
-    expect(ArkCrypto::Crypto.verify(transaction)).to be_truthy
-    expect(ArkCrypto::Crypto.second_verify(transaction, second_public_key_address)).to be_truthy
+    expect(ArkEcosystem::Crypto::Crypto.verify(transaction)).to be_truthy
+    expect(ArkEcosystem::Crypto::Crypto.second_verify(transaction, second_public_key_address)).to be_truthy
   end
 end

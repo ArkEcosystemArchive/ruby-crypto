@@ -7,13 +7,13 @@ require 'ark_crypto/configuration/network'
 require 'ark_crypto/networks/devnet'
 require 'ark_crypto/serialisers/timelock_transfer'
 
-describe ArkCrypto::Serialisers::TimelockTransfer do
+describe ArkEcosystem::Crypto::Serialisers::TimelockTransfer do
   describe '#serialise' do
     skip it 'should be ok' do
       transaction = JSON.parse!(File.read('spec/fixtures/transactions/timelock_transfer.json'), object_class: OpenStruct)
 
-      ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
-      serialiser = ArkCrypto::Serialisers::TimelockTransfer.new(transaction)
+      ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
+      serialiser = ArkEcosystem::Crypto::Serialisers::TimelockTransfer.new(transaction)
 
       actual = serialiser.serialise
 

@@ -7,13 +7,13 @@ require 'ark_crypto/configuration/network'
 require 'ark_crypto/networks/devnet'
 require 'ark_crypto/serialisers/delegate_resignation'
 
-describe ArkCrypto::Serialisers::DelegateResignation do
+describe ArkEcosystem::Crypto::Serialisers::DelegateResignation do
   describe '#serialise' do
     skip it 'should be ok' do
       transaction = JSON.parse!(File.read('spec/fixtures/transactions/delegate_resignation.json'), object_class: OpenStruct)
 
-      ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
-      serialiser = ArkCrypto::Serialisers::DelegateResignation.new(transaction)
+      ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
+      serialiser = ArkEcosystem::Crypto::Serialisers::DelegateResignation.new(transaction)
 
       actual = serialiser.serialise
 

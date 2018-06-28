@@ -7,13 +7,13 @@ require 'ark_crypto/configuration/network'
 require 'ark_crypto/networks/devnet'
 require 'ark_crypto/deserialisers/delegate_registration'
 
-describe ArkCrypto::Deserialisers::DelegateRegistration do
+describe ArkEcosystem::Crypto::Deserialisers::DelegateRegistration do
   describe '#deserialise' do
     it 'should be ok' do
       transaction = JSON.parse!(File.read('spec/fixtures/transactions/delegate_registration.json'), object_class: OpenStruct)
 
-      ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
-      deserialiser = ArkCrypto::Deserialisers::DelegateRegistration.new(transaction)
+      ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
+      deserialiser = ArkEcosystem::Crypto::Deserialisers::DelegateRegistration.new(transaction)
 
       actual = deserialiser.deserialise
 

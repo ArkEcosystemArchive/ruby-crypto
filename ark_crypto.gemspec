@@ -5,7 +5,7 @@ require "ark_crypto/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "ark_crypto"
-  spec.version       = ArkCrypto::VERSION
+  spec.version       = ArkEcosystem::Crypto::VERSION
   spec.authors       = ["Brian Faust"]
   spec.email         = ["hello@brianfaust.me"]
 

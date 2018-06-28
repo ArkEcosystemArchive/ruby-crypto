@@ -7,13 +7,13 @@ require 'ark_crypto/configuration/network'
 require 'ark_crypto/networks/devnet'
 require 'ark_crypto/serialisers/multi_signature_registration'
 
-describe ArkCrypto::Serialisers::MultiSignatureRegistration do
+describe ArkEcosystem::Crypto::Serialisers::MultiSignatureRegistration do
   describe '#serialise' do
     it 'should be ok' do
       transaction = JSON.parse!(File.read('spec/fixtures/transactions/multi_signature_registration.json'), object_class: OpenStruct)
 
-      ArkCrypto::Configuration::Network.set(ArkCrypto::Networks::Devnet)
-      serialiser = ArkCrypto::Serialisers::MultiSignatureRegistration.new(transaction)
+      ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
+      serialiser = ArkEcosystem::Crypto::Serialisers::MultiSignatureRegistration.new(transaction)
 
       actual = serialiser.serialise
 

@@ -3,7 +3,7 @@ require 'ostruct'
 
 require 'ark_crypto/identity/private_key'
 
-describe ArkCrypto::Identity::PrivateKey do
+describe ArkEcosystem::Crypto::Identity::PrivateKey do
   let(:secret) { 'this is a top secret passphrase' }
   let(:private_key) { 'd8839c2432bfd0a67ef10a804ba991eabba19f154a3d707917681d45822a5712' }
 

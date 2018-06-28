@@ -36,11 +36,3 @@ require 'ark_crypto/deserialisers/second_signature_registration'
 require 'ark_crypto/deserialisers/timelock_transfer'
 require 'ark_crypto/deserialisers/transfer'
 require 'ark_crypto/deserialisers/vote'
-
-module ArkCrypto
-  class << self
-    def initialize
-      print "Hello World"
-    end
-  end
-end
