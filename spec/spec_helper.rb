@@ -1,10 +1,4 @@
 require "bundler/setup"
-require "webmock/rspec"
-require "dotenv"
-
-Dotenv.load('.env')
-
-WebMock.allow_net_connect!
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
