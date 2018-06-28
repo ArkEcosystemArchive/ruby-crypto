@@ -18,6 +18,16 @@ module ArkEcosystem
           @transaction = transaction
         end
 
+        def self.from_hash(transaction)
+          Transaction.new(transaction)
+        end
+
+        def self.from_json(transaction)
+          transaction = JSON.parse transaction
+
+          Transaction.new(transaction)
+        end
+
         def serialise
           type = @@serialiseHandlers[@transaction[:type]]
 
