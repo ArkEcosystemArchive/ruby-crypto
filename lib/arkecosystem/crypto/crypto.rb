@@ -21,66 +21,72 @@ module ArkEcosystem
       end
 
       def self.get_bytes(transaction, skip_signature = true, skip_second_signature = true)
-        out = ''
-        out << [transaction[:type]].pack('c')
-        out << [transaction[:timestamp]].pack("V")
-        out << [transaction[:sender_public_key]].pack('H*')
+        bytes = ''
+        bytes << [transaction[:type]].pack('c')
+        bytes << [transaction[:timestamp]].pack("V")
+        bytes << [transaction[:sender_public_key]].pack('H*')
 
         if transaction[:recipient_id]
-          out << BTC::Base58.data_from_base58check(transaction[:recipient_id])
+          bytes << BTC::Base58.data_from_base58check(transaction[:recipient_id])
         else
-          out << [].pack('x21')
+          bytes << [].pack('x21')
         end
 
         if transaction[:vendor_field]
-          out << transaction[:vendor_field]
+          bytes << transaction[:vendor_field]
 
           if transaction[:vendor_field].size < 64
-            out << [].pack("x#{64 - transaction[:vendor_field].size}")
+            bytes << [].pack("x#{64 - transaction[:vendor_field].size}")
           end
         else
-          out << [].pack("x64")
+          bytes << [].pack("x64")
         end
 
-        out << [transaction[:amount]].pack('Q<')
-        out << [transaction[:fee]].pack('Q<')
+        bytes << [transaction[:amount]].pack('Q<')
+        bytes << [transaction[:fee]].pack('Q<')
 
         case transaction[:type]
         when ArkEcosystem::Crypto::Enums::Types::SECOND_SIGNATURE_REGISTRATION
           asset_signature_public_key = transaction[:asset][:signature][:public_key]
 
-          out << [asset_signature_public_key].pack('H*')
+          bytes << [asset_signature_public_key].pack('H*')
         when ArkEcosystem::Crypto::Enums::Types::DELEGATE_REGISTRATION
-          out << transaction[:asset][:delegate][:username]
+          bytes << transaction[:asset][:delegate][:username]
         when ArkEcosystem::Crypto::Enums::Types::VOTE
-          out << transaction[:asset][:votes].join('')
+          bytes << transaction[:asset][:votes].join('')
         when ArkEcosystem::Crypto::Enums::Types::MULTI_SIGNATURE_REGISTRATION
           ms_asset = transaction[:asset][:multisignature]
 
-          out << [ms_asset[:min]].pack('C')
-          out << [ms_asset[:lifetime]].pack('C')
-          out << ms_asset[:keysgroup].join('')
+          bytes << [ms_asset[:min]].pack('C')
+          bytes << [ms_asset[:lifetime]].pack('C')
+          bytes << ms_asset[:keysgroup].join('')
         end
 
         if !skip_signature && transaction[:signature]
-          out << [transaction[:signature]].pack('H*')
+          bytes << [transaction[:signature]].pack('H*')
         end
 
         if !skip_second_signature && transaction[:sign_signature]
-          out << [transaction[:sign_signature]].pack('H*')
+          bytes << [transaction[:sign_signature]].pack('H*')
         end
 
-        out
+        bytes
       end
 
       def self.verify(transaction)
         public_only_key = BTC::Key.new(:public_key => [transaction.sender_public_key].pack('H*'))
-        public_only_key.verify_ecdsa_signature([transaction.signature].pack('H*'), Digest::SHA256.digest(transaction.to_bytes))
+
+        bytes = ArkEcosystem::Crypto::Crypto.get_bytes(transaction.to_hash)
+
+        public_only_key.verify_ecdsa_signature([transaction.signature].pack('H*'), Digest::SHA256.digest(bytes))
       end
 
       def self.second_verify(transaction, second_public_key_hex)
         public_only_key = BTC::Key.new(:public_key => [second_public_key_hex].pack('H*'))
-        public_only_key.verify_ecdsa_signature([transaction.sign_signature].pack('H*'), Digest::SHA256.digest(transaction.to_bytes(false)))
+
+        bytes = ArkEcosystem::Crypto::Crypto.get_bytes(transaction.to_hash, false)
+
+        public_only_key.verify_ecdsa_signature([transaction.sign_signature].pack('H*'), Digest::SHA256.digest(bytes))
       end
 
       def self.parse_signatures(serialized, transaction, start_offset)

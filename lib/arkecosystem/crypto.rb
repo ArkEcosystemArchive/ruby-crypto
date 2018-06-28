@@ -1,6 +1,12 @@
 require 'arkecosystem/crypto/crypto'
 require 'arkecosystem/crypto/message'
 
+require 'arkecosystem/crypto/builder/delegate_registration'
+require 'arkecosystem/crypto/builder/multi_signature_registration'
+require 'arkecosystem/crypto/builder/second_signature_registration'
+require 'arkecosystem/crypto/builder/transfer'
+require 'arkecosystem/crypto/builder/vote'
+
 require 'arkecosystem/crypto/configuration/fee'
 require 'arkecosystem/crypto/configuration/network'
 

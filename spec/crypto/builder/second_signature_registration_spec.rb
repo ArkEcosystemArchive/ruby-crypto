@@ -1,10 +1,11 @@
 require 'spec_helper'
 require 'ostruct'
 
-require 'arkecosystem/crypto/crypto'
-require 'arkecosystem/crypto/configuration/network'
-require 'arkecosystem/crypto/networks/devnet'
 require 'arkecosystem/crypto/builder/second_signature_registration'
+require 'arkecosystem/crypto/configuration/network'
+require 'arkecosystem/crypto/crypto'
+require 'arkecosystem/crypto/identity/public_key'
+require 'arkecosystem/crypto/networks/devnet'
 
 describe ArkEcosystem::Crypto::Builder::SecondSignatureRegistration do
   let(:secret) { 'this is a top secret passphrase' }
@@ -14,15 +15,13 @@ describe ArkEcosystem::Crypto::Builder::SecondSignatureRegistration do
     ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
 
     transaction = described_class.new
-    .create
     .set_second_secret(second_secret)
     .sign(secret)
     .second_sign(second_secret)
-    .get_struct
 
-    second_public_key_address = ArkEcosystem::Crypto::Crypto.get_key(second_secret).public_key.unpack('H*').first
+    second_public_key_address = ArkEcosystem::Crypto::Identity::PublicKey.from_secret_as_hex(second_secret)
 
-    expect(ArkEcosystem::Crypto::Crypto.verify(transaction)).to be_truthy
-    expect(ArkEcosystem::Crypto::Crypto.second_verify(transaction, second_public_key_address)).to be_truthy
+    expect(transaction.verify).to be_truthy
+    expect(transaction.second_verify(second_public_key_address)).to be_truthy
   end
 end

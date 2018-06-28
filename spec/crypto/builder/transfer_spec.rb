@@ -1,10 +1,11 @@
 require 'spec_helper'
 require 'ostruct'
 
-require 'arkecosystem/crypto/crypto'
-require 'arkecosystem/crypto/configuration/network'
-require 'arkecosystem/crypto/networks/devnet'
 require 'arkecosystem/crypto/builder/transfer'
+require 'arkecosystem/crypto/configuration/network'
+require 'arkecosystem/crypto/crypto'
+require 'arkecosystem/crypto/identity/public_key'
+require 'arkecosystem/crypto/networks/devnet'
 
 describe ArkEcosystem::Crypto::Builder::Transfer do
   let(:amount) { 133380000000 }
@@ -17,31 +18,27 @@ describe ArkEcosystem::Crypto::Builder::Transfer do
     ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
 
     transaction = described_class.new
-    .recipient_id(recipient_id)
-    .amount(amount)
-    .vendor_field(vendor_field)
-    .create
+    .set_recipient_id(recipient_id)
+    .set_amount(amount)
+    .set_vendor_field(vendor_field)
     .sign(secret)
-    .get_struct
 
-    expect(ArkEcosystem::Crypto::Crypto.verify(transaction)).to be_truthy
+    expect(transaction.verify).to be_truthy
   end
 
   it 'should be ok with a second secret' do
     ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
 
     transaction = described_class.new
-    .recipient_id(recipient_id)
-    .amount(amount)
-    .vendor_field(vendor_field)
-    .create
+    .set_recipient_id(recipient_id)
+    .set_amount(amount)
+    .set_vendor_field(vendor_field)
     .sign(secret)
     .second_sign(second_secret)
-    .get_struct
 
-    second_public_key_address = ArkEcosystem::Crypto::Crypto.get_key(second_secret).public_key.unpack('H*').first
+    second_public_key_address = ArkEcosystem::Crypto::Identity::PublicKey.from_secret_as_hex(second_secret)
 
-    expect(ArkEcosystem::Crypto::Crypto.verify(transaction)).to be_truthy
-    expect(ArkEcosystem::Crypto::Crypto.second_verify(transaction, second_public_key_address)).to be_truthy
+    expect(transaction.verify).to be_truthy
+    expect(transaction.second_verify(second_public_key_address)).to be_truthy
   end
 end

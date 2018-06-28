@@ -1,10 +1,11 @@
 require 'spec_helper'
 require 'ostruct'
 
-require 'arkecosystem/crypto/crypto'
-require 'arkecosystem/crypto/configuration/network'
-require 'arkecosystem/crypto/networks/devnet'
 require 'arkecosystem/crypto/builder/vote'
+require 'arkecosystem/crypto/configuration/network'
+require 'arkecosystem/crypto/crypto'
+require 'arkecosystem/crypto/identity/public_key'
+require 'arkecosystem/crypto/networks/devnet'
 
 describe ArkEcosystem::Crypto::Builder::Vote do
   let(:delegate) { '034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed192' }
@@ -15,27 +16,23 @@ describe ArkEcosystem::Crypto::Builder::Vote do
     ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
 
     transaction = described_class.new
-    .votes(["+#{delegate}"])
-    .create
+    .set_votes(["+#{delegate}"])
     .sign(secret)
-    .get_struct
 
-    expect(ArkEcosystem::Crypto::Crypto.verify(transaction)).to be_truthy
+    expect(transaction.verify).to be_truthy
   end
 
   it 'should be ok with a second secret' do
     ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
 
     transaction = described_class.new
-    .votes(["+#{delegate}"])
-    .create
+    .set_votes(["+#{delegate}"])
     .sign(secret)
     .second_sign(second_secret)
-    .get_struct
 
-    second_public_key_address = ArkEcosystem::Crypto::Crypto.get_key(second_secret).public_key.unpack('H*').first
+    second_public_key_address = ArkEcosystem::Crypto::Identity::PublicKey.from_secret_as_hex(second_secret)
 
-    expect(ArkEcosystem::Crypto::Crypto.verify(transaction)).to be_truthy
-    expect(ArkEcosystem::Crypto::Crypto.second_verify(transaction, second_public_key_address)).to be_truthy
+    expect(transaction.verify).to be_truthy
+    expect(transaction.second_verify(second_public_key_address)).to be_truthy
   end
 end

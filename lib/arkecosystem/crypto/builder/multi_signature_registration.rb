@@ -2,48 +2,41 @@ require 'arkecosystem/crypto/crypto'
 require 'arkecosystem/crypto/enums/fees'
 require 'arkecosystem/crypto/enums/types'
 require 'arkecosystem/crypto/builder/transaction'
-require 'arkecosystem/crypto/builder/utils/signing'
 
 module ArkEcosystem
   module Crypto
     module Builder
-      class MultiSignatureRegistration
-        include Utils::Signing
-
+      class MultiSignatureRegistration < Transaction
         def initialize
-          @type = ArkEcosystem::Crypto::Enums::Types::MULTI_SIGNATURE_REGISTRATION
+          super
+
+          @asset = {
+            multisignature: {}
+          }
         end
 
         def set_keysgroup(keysgroup)
-          @keysgroup = keysgroup
+          @asset[:multisignature][:keysgroup] = keysgroup
           self
         end
 
         def set_lifetime(lifetime)
-          @lifetime = lifetime
+          @asset[:multisignature][:lifetime] = lifetime
           self
         end
 
         def set_min(min)
-          @min = min
+          @asset[:multisignature][:min] = min
           self
         end
 
-        def create
-          @transaction = Transaction.new(
-            :type => @type,
-            :fee => (@keysgroup.size + 1) * ArkEcosystem::Crypto::Configuration::Fee.get(@type),
-            :amount => 0,
-            :asset => {
-              :multisignature => {
-                :min => @min,
-                :lifetime => @lifetime,
-                :keysgroup => @keysgroup
-              }
-            }
-          )
+        def sign(secret)
+          @fee = (@asset[:multisignature][:keysgroup].size + 1) * ArkEcosystem::Crypto::Configuration::Fee.get(@type)
+          self.sign_and_create_id(secret)
+        end
 
-          self
+        def get_type
+          ArkEcosystem::Crypto::Enums::Types::MULTI_SIGNATURE_REGISTRATION
         end
       end
     end

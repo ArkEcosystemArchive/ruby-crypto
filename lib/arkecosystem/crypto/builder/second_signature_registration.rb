@@ -1,41 +1,24 @@
 require 'arkecosystem/crypto/crypto'
 require 'arkecosystem/crypto/enums/fees'
 require 'arkecosystem/crypto/enums/types'
+require 'arkecosystem/crypto/identity/public_key'
 require 'arkecosystem/crypto/builder/transaction'
-require 'arkecosystem/crypto/builder/utils/signing'
 
 module ArkEcosystem
   module Crypto
     module Builder
-      class SecondSignatureRegistration
-        include Utils::Signing
-
-        def initialize
-          @type = ArkEcosystem::Crypto::Enums::Types::SECOND_SIGNATURE_REGISTRATION
-          @fee = ArkEcosystem::Crypto::Enums::Fees::SECOND_SIGNATURE_REGISTRATION
-        end
-
+      class SecondSignatureRegistration < Transaction
         def set_second_secret(second_secret)
-          second_key = ArkEcosystem::Crypto::Crypto.get_key(second_secret)
-
-          asset = {
-            :signature => {
-              :public_key => second_key.public_key.unpack('H*').first
+          @asset = {
+            signature: {
+              public_key: ArkEcosystem::Crypto::Identity::PublicKey.from_secret_as_hex(second_secret)
             }
           }
-
-          @transaction.set_asset(asset)
           self
         end
 
-        def create
-          @transaction = Transaction.new(
-            :type => @type,
-            :fee => @fee,
-            :amount => 0
-          )
-
-          self
+        def get_type
+          ArkEcosystem::Crypto::Enums::Types::SECOND_SIGNATURE_REGISTRATION
         end
       end
     end

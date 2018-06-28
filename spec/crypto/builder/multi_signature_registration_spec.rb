@@ -1,10 +1,11 @@
 require 'spec_helper'
 require 'ostruct'
 
-require 'arkecosystem/crypto/crypto'
-require 'arkecosystem/crypto/configuration/network'
-require 'arkecosystem/crypto/networks/devnet'
 require 'arkecosystem/crypto/builder/multi_signature_registration'
+require 'arkecosystem/crypto/configuration/network'
+require 'arkecosystem/crypto/crypto'
+require 'arkecosystem/crypto/identity/public_key'
+require 'arkecosystem/crypto/networks/devnet'
 
 describe ArkEcosystem::Crypto::Builder::MultiSignatureRegistration do
   let(:keysgroup) do
@@ -27,11 +28,9 @@ describe ArkEcosystem::Crypto::Builder::MultiSignatureRegistration do
     .set_keysgroup(keysgroup)
     .set_lifetime(lifetime)
     .set_min(min)
-    .create
     .sign(secret)
-    .get_struct
 
-    expect(ArkEcosystem::Crypto::Crypto.verify(transaction)).to be_truthy
+    expect(transaction.verify).to be_truthy
   end
 
   it 'should be ok with a second secret' do
@@ -41,14 +40,12 @@ describe ArkEcosystem::Crypto::Builder::MultiSignatureRegistration do
     .set_keysgroup(keysgroup)
     .set_lifetime(lifetime)
     .set_min(min)
-    .create
     .sign(secret)
     .second_sign(second_secret)
-    .get_struct
 
-    second_public_key_address = ArkEcosystem::Crypto::Crypto.get_key(second_secret).public_key.unpack('H*').first
+    second_public_key_address = ArkEcosystem::Crypto::Identity::PublicKey.from_secret_as_hex(second_secret)
 
-    expect(ArkEcosystem::Crypto::Crypto.verify(transaction)).to be_truthy
-    expect(ArkEcosystem::Crypto::Crypto.second_verify(transaction, second_public_key_address)).to be_truthy
+    expect(transaction.verify).to be_truthy
+    expect(transaction.second_verify(second_public_key_address)).to be_truthy
   end
 end

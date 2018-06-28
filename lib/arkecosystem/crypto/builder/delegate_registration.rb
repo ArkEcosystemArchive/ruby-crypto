@@ -1,47 +1,30 @@
 require 'arkecosystem/crypto/crypto'
 require 'arkecosystem/crypto/enums/fees'
 require 'arkecosystem/crypto/enums/types'
+require 'arkecosystem/crypto/identity/public_key'
 require 'arkecosystem/crypto/builder/transaction'
-require 'arkecosystem/crypto/builder/utils/signing'
 
 module ArkEcosystem
   module Crypto
     module Builder
-      class DelegateRegistration
-        include Utils::Signing
-
-        def initialize
-          @type = ArkEcosystem::Crypto::Enums::Types::DELEGATE_REGISTRATION
-        end
-
-        def username(username)
+      class DelegateRegistration < Transaction
+        def set_username(username)
           @username = username
           self
         end
 
-        def create
-          @transaction = Transaction.new(
-            :type => @type,
-            :fee => @fee,
-            :amount => 0
-          )
-          self
-        end
-
         def sign(secret)
-          key = ArkEcosystem::Crypto::Crypto.get_key(secret)
-
-          asset = {
-            :delegate => {
+          @asset = {
+            delegate: {
               username: @username,
-              public_key: key.public_key.unpack('H*').first
+              public_key: ArkEcosystem::Crypto::Identity::PublicKey.from_secret_as_hex(secret)
             }
           }
+          self.sign_and_create_id(secret)
+        end
 
-          @transaction.set_asset(asset)
-
-          @transaction.sign_and_create_id(secret)
-          self
+        def get_type
+          ArkEcosystem::Crypto::Enums::Types::DELEGATE_REGISTRATION
         end
       end
     end
