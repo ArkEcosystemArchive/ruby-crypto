@@ -38,10 +38,9 @@ module ArkEcosystem
         private
 
         def handle_type(bytes)
-          handler_name = @handlers[@transaction[:type]]
-
-          handler = Object.const_get("ArkEcosystem::Crypto::Serialisers::#{handler_name}")
-          handler.serialise(@transaction, bytes)
+          serialiser = @handlers[@transaction[:type]]
+          serialiser = Object.const_get("ArkEcosystem::Crypto::Serialisers::#{serialiser}")
+          serialiser.new(@transaction, bytes).serialise
         end
 
         def handle_vendor_field(bytes)

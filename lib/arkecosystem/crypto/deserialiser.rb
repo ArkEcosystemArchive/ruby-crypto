@@ -55,10 +55,9 @@ module ArkEcosystem
       private
 
       def handle_type(asset_offset, transaction)
-        handler_name = @handlers[transaction[:type]]
-
-        handler = Object.const_get("ArkEcosystem::Crypto::Deserialisers::#{handler_name}")
-        handler.deserialise(@serialised, @binary, asset_offset, transaction)
+        deserialiser = @handlers[transaction[:type]]
+        deserialiser = Object.const_get("ArkEcosystem::Crypto::Deserialisers::#{deserialiser}")
+        deserialiser.new(@serialised, @binary, asset_offset, transaction).deserialise
       end
 
       def handle_version_one(transaction)
