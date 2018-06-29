@@ -23,9 +23,9 @@ module ArkEcosystem
 
         hash = Digest::SHA256.digest(message)
 
-        from_hash(publickey: BTC.to_hex(key.public_key),
-                  signature: BTC.to_hex(key.ecdsa_signature(hash)),
-                  message: message)
+        Message.new(publickey: BTC.to_hex(key.public_key),
+                    signature: BTC.to_hex(key.ecdsa_signature(hash)),
+                    message: message)
       end
 
       def verify

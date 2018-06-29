@@ -11,14 +11,6 @@ describe ArkEcosystem::Crypto::Message do
       message: message }
   end
 
-  describe '#from_hash' do
-    it 'should be ok' do
-      actual = described_class.from_hash(struct)
-
-      expect(actual).to be_a_kind_of(described_class)
-    end
-  end
-
   describe '#from_json' do
     it 'should be ok' do
       actual = described_class.from_json(struct.to_json)
@@ -37,7 +29,7 @@ describe ArkEcosystem::Crypto::Message do
 
   describe '#verify' do
     it 'should be ok' do
-      dummy = described_class.from_hash(struct)
+      dummy = described_class.new(struct)
       actual = dummy.verify
 
       expect(actual).to eq(true)
@@ -46,7 +38,7 @@ describe ArkEcosystem::Crypto::Message do
 
   describe '#to_params' do
     it 'should be ok' do
-      dummy = described_class.from_hash(struct)
+      dummy = described_class.new(struct)
 
       actual = dummy.to_params
 
@@ -56,7 +48,7 @@ describe ArkEcosystem::Crypto::Message do
 
   describe '#to_json' do
     it 'should be ok' do
-      dummy = described_class.from_hash(struct)
+      dummy = described_class.new(struct)
 
       actual = dummy.to_json
 
