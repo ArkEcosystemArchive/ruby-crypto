@@ -89,6 +89,6 @@ module ArkEcosystem
 
         transaction
       end
-  end
+    end
   end
 end
