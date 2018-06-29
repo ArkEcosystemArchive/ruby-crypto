@@ -1,4 +1,4 @@
-require 'date'
+require 'time'
 require 'arkecosystem/crypto/crypto'
 require 'arkecosystem/crypto/identity/private_key'
 require 'arkecosystem/crypto/configuration/fee'
@@ -95,7 +95,7 @@ module ArkEcosystem
         def seconds_after_epoch
           network = ArkEcosystem::Crypto::Configuration::Network.get
 
-          (Time.now.utc - Date.parse(network.epoch).to_time.to_i).to_i
+          (Time.now.utc - Time.parse(network.epoch).to_time.to_i).to_i
         end
 
         def snake_case_to_camel_case(string)
