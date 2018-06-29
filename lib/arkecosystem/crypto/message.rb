@@ -10,10 +10,6 @@ module ArkEcosystem
         @message = message[:message]
       end
 
-      def self.from_hash(message)
-        Message.new(message)
-      end
-
       def self.from_json(message)
         message = JSON.parse message
 
