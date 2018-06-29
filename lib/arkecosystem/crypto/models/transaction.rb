@@ -3,20 +3,20 @@ module ArkEcosystem
     module Models
       # The model of a transaction.
       class Transaction
-        @serialise_handlers = %w[
-          Transfer
-          SecondSignatureRegistration
-          DelegateRegistration
-          Vote
-          MultiSignatureRegistration
-          Ipfs
-          TimelockTransfer
-          MultiPayment
-          DelegateResignation
-        ]
-
         def initialize(transaction)
           @transaction = transaction
+
+          @serialise_handlers = %w[
+            Transfer
+            SecondSignatureRegistration
+            DelegateRegistration
+            Vote
+            MultiSignatureRegistration
+            Ipfs
+            TimelockTransfer
+            MultiPayment
+            DelegateResignation
+          ]
         end
 
         def self.from_hash(transaction)
