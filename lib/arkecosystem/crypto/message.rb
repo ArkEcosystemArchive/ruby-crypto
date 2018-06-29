@@ -10,14 +10,6 @@ module ArkEcosystem
         @message = message[:message]
       end
 
-      def self.from_json(message)
-        message = JSON.parse message
-
-        Message.new(publickey: message['publickey'],
-                    signature: message['signature'],
-                    message: message['message'])
-      end
-
       def self.sign(message, passphrase)
         key = ArkEcosystem::Crypto::Identity::PrivateKey.from_secret(passphrase)
 

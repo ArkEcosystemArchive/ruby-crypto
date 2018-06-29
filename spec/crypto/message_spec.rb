@@ -11,14 +11,6 @@ describe ArkEcosystem::Crypto::Message do
       message: message }
   end
 
-  describe '#from_json' do
-    it 'should be ok' do
-      actual = described_class.from_json(struct.to_json)
-
-      expect(actual).to be_a_kind_of(described_class)
-    end
-  end
-
   describe '#sign' do
     it 'should be ok' do
       actual = described_class.sign(message, signature)
