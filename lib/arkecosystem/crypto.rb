@@ -18,7 +18,6 @@ require 'arkecosystem/crypto/identity/private_key'
 require 'arkecosystem/crypto/identity/public_key'
 require 'arkecosystem/crypto/identity/wif'
 
-require 'arkecosystem/crypto/models/transaction'
 require 'arkecosystem/crypto/networks/devnet'
 require 'arkecosystem/crypto/networks/mainnet'
 require 'arkecosystem/crypto/networks/testnet'

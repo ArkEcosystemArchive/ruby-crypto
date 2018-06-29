@@ -7,7 +7,7 @@ describe ArkEcosystem::Crypto::Serialisers::Vote do
 
       ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
 
-      actual = ArkEcosystem::Crypto::Models::Transaction.serialise(transaction)
+      actual = ArkEcosystem::Crypto::Serialiser.new(transaction).serialise
 
       expect(actual).to eq(transaction[:serialized])
     end

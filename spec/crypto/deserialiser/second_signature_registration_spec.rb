@@ -7,7 +7,7 @@ describe ArkEcosystem::Crypto::Deserialisers::SecondSignatureRegistration do
 
       ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
 
-      actual = ArkEcosystem::Crypto::Models::Transaction.deserialise(transaction['serialized'])
+      actual = ArkEcosystem::Crypto::Deserialiser.new(transaction['serialized']).deserialise
 
       expect(actual[:version]).to eq(transaction[:version])
       expect(actual[:network]).to eq(transaction[:network])

@@ -7,7 +7,7 @@ describe ArkEcosystem::Crypto::Deserialisers::IPFS do
 
       ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
 
-      actual = ArkEcosystem::Crypto::Models::Transaction.deserialise(transaction['serialized'])
+      actual = ArkEcosystem::Crypto::Deserialiser.new(transaction['serialized']).deserialise
 
       expect(actual[:id]).to eq(transaction[:id])
     end
