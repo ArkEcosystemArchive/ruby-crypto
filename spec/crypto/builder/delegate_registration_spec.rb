@@ -16,8 +16,8 @@ describe ArkEcosystem::Crypto::Builder::DelegateRegistration do
     ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
 
     transaction = described_class.new
-    .set_username(username)
-    .sign(secret)
+                                 .set_username(username)
+                                 .sign(secret)
 
     expect(transaction.verify).to be_truthy
   end
@@ -26,9 +26,9 @@ describe ArkEcosystem::Crypto::Builder::DelegateRegistration do
     ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
 
     transaction = described_class.new
-    .set_username(username)
-    .sign(secret)
-    .second_sign(second_secret)
+                                 .set_username(username)
+                                 .sign(secret)
+                                 .second_sign(second_secret)
 
     second_public_key_address = ArkEcosystem::Crypto::Identity::PublicKey.from_secret_as_hex(second_secret)
 

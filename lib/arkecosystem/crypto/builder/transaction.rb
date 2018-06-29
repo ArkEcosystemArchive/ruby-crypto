@@ -9,22 +9,10 @@ module ArkEcosystem
   module Crypto
     module Builder
       class Transaction
-        attr_accessor *%i(
-          amount
-          asset
-          fee
-          id
-          recipient_id
-          sender_public_key
-          sign_signature
-          signature
-          timestamp
-          type
-          vendor_field
-        )
+        attr_accessor :amount, :asset, :fee, :id, :recipient_id, :sender_public_key, :sign_signature, :signature, :timestamp, :type, :vendor_field
 
         def initialize
-          @type = self.get_type
+          @type = get_type
           @fee = ArkEcosystem::Crypto::Configuration::Fee.get(@type)
           @sender_public_key = nil
           @recipient_id = nil
@@ -35,17 +23,17 @@ module ArkEcosystem
         end
 
         def sign(secret)
-          self.sign_and_create_id(secret)
+          sign_and_create_id(secret)
         end
 
         def sign_and_create_id(secret)
           private_key = ArkEcosystem::Crypto::Identity::PrivateKey.from_secret(secret)
           @sender_public_key = private_key.public_key.unpack('H*').first
 
-          transaction_bytes = ArkEcosystem::Crypto::Crypto.get_bytes(self.to_hash)
+          transaction_bytes = ArkEcosystem::Crypto::Crypto.get_bytes(to_hash)
           @signature = private_key.ecdsa_signature(Digest::SHA256.digest(transaction_bytes)).unpack('H*').first
 
-          transaction_bytes = ArkEcosystem::Crypto::Crypto.get_bytes(self.to_hash, false, false)
+          transaction_bytes = ArkEcosystem::Crypto::Crypto.get_bytes(to_hash, false, false)
           @id = Digest::SHA256.digest(transaction_bytes).unpack('H*').first
           self
         end
@@ -53,7 +41,7 @@ module ArkEcosystem
         def second_sign(second_secret)
           second_key = ArkEcosystem::Crypto::Crypto.get_key(second_secret)
 
-          bytes = ArkEcosystem::Crypto::Crypto.get_bytes(self.to_hash, false)
+          bytes = ArkEcosystem::Crypto::Crypto.get_bytes(to_hash, false)
 
           @sign_signature = second_key.ecdsa_signature(Digest::SHA256.digest(bytes)).unpack('H*').first
           self
@@ -69,41 +57,41 @@ module ArkEcosystem
 
         def to_params
           {
-            :type => type,
-            :amount => amount,
-            :fee => fee,
-            :vendorField => vendor_field,
-            :timestamp => timestamp,
-            :recipientId => recipient_id,
-            :senderPublicKey => sender_public_key,
-            :signature => signature,
-            :id => id
+            type: type,
+            amount: amount,
+            fee: fee,
+            vendorField: vendor_field,
+            timestamp: timestamp,
+            recipientId: recipient_id,
+            senderPublicKey: sender_public_key,
+            signature: signature,
+            id: id
           }.tap do |h|
-            h[:asset] = asset.deep_transform_keys {|key| snake_case_to_camel_case(key)} if asset.any?
+            h[:asset] = asset.deep_transform_keys { |key| snake_case_to_camel_case(key) } if asset.any?
             h[:signSignature] = sign_signature if sign_signature
           end
         end
 
         def to_hash
           {
-            :amount => amount,
-            :asset => asset,
-            :fee => fee,
-            :id => id,
-            :recipient_id => recipient_id,
-            :sender_public_key => sender_public_key,
-            :sign_signature => sign_signature,
-            :signature => signature,
-            :timestamp => timestamp,
-            :type => type,
-            :vendor_field => vendor_field,
+            amount: amount,
+            asset: asset,
+            fee: fee,
+            id: id,
+            recipient_id: recipient_id,
+            sender_public_key: sender_public_key,
+            sign_signature: sign_signature,
+            signature: signature,
+            timestamp: timestamp,
+            type: type,
+            vendor_field: vendor_field
           }
         end
 
         private
 
         def seconds_after_epoch
-          (Time.now.utc - Time.utc(2017, 3, 21, 13, 00, 00)).to_i
+          (Time.now.utc - Time.utc(2017, 3, 21, 13, 0o0, 0o0)).to_i
         end
 
         def snake_case_to_camel_case(string)

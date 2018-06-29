@@ -11,7 +11,7 @@ module ArkEcosystem
           recipient_id = @binary.unpack("H#{(asset_offset / 2 + 12) * 2}H42").last
           transaction[:recipient_id] = BTC::Base58.base58check_from_data([recipient_id].pack('H*'))
 
-          ArkEcosystem::Crypto::Crypto::parse_signatures(@serialized, transaction, asset_offset + (21 + 12) * 2)
+          ArkEcosystem::Crypto::Crypto.parse_signatures(@serialized, transaction, asset_offset + (21 + 12) * 2)
         end
       end
     end

@@ -5,11 +5,11 @@ module ArkEcosystem
   module Crypto
     class Crypto
       def self.get_id(transaction)
-        return Digest::SHA256.digest(self.get_bytes(transaction, false, false)).unpack('H*').first
+        Digest::SHA256.digest(get_bytes(transaction, false, false)).unpack('H*').first
       end
 
       def self.get_key(secret)
-        BTC::Key.new(:private_key => Digest::SHA256.digest(secret), :public_key_compressed => true)
+        BTC::Key.new(private_key: Digest::SHA256.digest(secret), public_key_compressed: true)
       end
 
       def self.get_address(key, network_address = '17')
@@ -17,20 +17,20 @@ module ArkEcosystem
       end
 
       def self.get_public_key(public_key)
-        BTC::Key.new(:public_key => public_key)
+        BTC::Key.new(public_key: public_key)
       end
 
       def self.get_bytes(transaction, skip_signature = true, skip_second_signature = true)
         bytes = ''
         bytes << [transaction[:type]].pack('c')
-        bytes << [transaction[:timestamp]].pack("V")
+        bytes << [transaction[:timestamp]].pack('V')
         bytes << [transaction[:sender_public_key]].pack('H*')
 
-        if transaction[:recipient_id]
-          bytes << BTC::Base58.data_from_base58check(transaction[:recipient_id])
-        else
-          bytes << [].pack('x21')
-        end
+        bytes << if transaction[:recipient_id]
+                   BTC::Base58.data_from_base58check(transaction[:recipient_id])
+                 else
+                   [].pack('x21')
+                 end
 
         if transaction[:vendor_field]
           bytes << transaction[:vendor_field]
@@ -39,7 +39,7 @@ module ArkEcosystem
             bytes << [].pack("x#{64 - transaction[:vendor_field].size}")
           end
         else
-          bytes << [].pack("x64")
+          bytes << [].pack('x64')
         end
 
         bytes << [transaction[:amount]].pack('Q<')
@@ -74,7 +74,7 @@ module ArkEcosystem
       end
 
       def self.verify(transaction)
-        public_only_key = BTC::Key.new(:public_key => [transaction.sender_public_key].pack('H*'))
+        public_only_key = BTC::Key.new(public_key: [transaction.sender_public_key].pack('H*'))
 
         bytes = ArkEcosystem::Crypto::Crypto.get_bytes(transaction.to_hash)
 
@@ -82,7 +82,7 @@ module ArkEcosystem
       end
 
       def self.second_verify(transaction, second_public_key_hex)
-        public_only_key = BTC::Key.new(:public_key => [second_public_key_hex].pack('H*'))
+        public_only_key = BTC::Key.new(public_key: [second_public_key_hex].pack('H*'))
 
         bytes = ArkEcosystem::Crypto::Crypto.get_bytes(transaction.to_hash, false)
 
@@ -110,7 +110,7 @@ module ArkEcosystem
           if transaction[:second_signature].empty?
             transaction.delete(:second_signature)
           else
-            if ('ff' === transaction[:second_signature][0, 2])
+            if 'ff' === transaction[:second_signature][0, 2]
               transaction.delete(:second_signature)
             else
               # Second Signature
@@ -125,13 +125,9 @@ module ArkEcosystem
           # All Signatures
           signatures = serialized[(start_offset + multi_signature_offset)..-1]
 
-          if signatures.empty?
-            return transaction
-          end
+          return transaction if signatures.empty?
 
-          if signatures[0, 2] != 'ff'
-            return transaction
-          end
+          return transaction if signatures[0, 2] != 'ff'
 
           # Parse Multi Signatures
           signatures = signatures[2..-1]
@@ -140,9 +136,7 @@ module ArkEcosystem
           more_signatures = true
 
           while more_signatures
-            if signatures.empty?
-              break
-            end
+            break if signatures.empty?
 
             multi_signature_length = signatures[2, 2].to_i(16) + 2
 

@@ -13,7 +13,7 @@ module ArkEcosystem
           ArkEcosystem::Crypto::Enums::Fees::IPFS,
           ArkEcosystem::Crypto::Enums::Fees::TIMELOCK_TRANSFER,
           ArkEcosystem::Crypto::Enums::Fees::MULTI_PAYMENT,
-          ArkEcosystem::Crypto::Enums::Fees::DELEGATE_RESIGNATION,
+          ArkEcosystem::Crypto::Enums::Fees::DELEGATE_RESIGNATION
         ]
 
         def self.get(type)

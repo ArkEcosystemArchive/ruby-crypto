@@ -15,9 +15,9 @@ describe ArkEcosystem::Crypto::Builder::SecondSignatureRegistration do
     ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
 
     transaction = described_class.new
-    .set_second_secret(second_secret)
-    .sign(secret)
-    .second_sign(second_secret)
+                                 .set_second_secret(second_secret)
+                                 .sign(secret)
+                                 .second_sign(second_secret)
 
     second_public_key_address = ArkEcosystem::Crypto::Identity::PublicKey.from_secret_as_hex(second_secret)
 

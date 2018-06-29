@@ -32,7 +32,7 @@ module ArkEcosystem
 
         def sign(secret)
           @fee = (@asset[:multisignature][:keysgroup].size + 1) * ArkEcosystem::Crypto::Configuration::Fee.get(@type)
-          self.sign_and_create_id(secret)
+          sign_and_create_id(secret)
         end
 
         def get_type

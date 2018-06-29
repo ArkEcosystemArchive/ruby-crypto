@@ -5,7 +5,7 @@ module ArkEcosystem
     module Identity
       class WIF
         def self.from_secret(secret, network = nil)
-          network = network || ArkEcosystem::Crypto::Configuration::Network.get
+          network ||= ArkEcosystem::Crypto::Configuration::Network.get
 
           secret = Digest::SHA256.digest(secret)
 

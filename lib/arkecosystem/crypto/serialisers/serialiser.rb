@@ -11,7 +11,7 @@ module ArkEcosystem
         def serialise
           bytes = ''
           bytes << [0xff].pack('C')
-          bytes << [@transaction[:version] ||  0x01].pack('C')
+          bytes << [@transaction[:version] || 0x01].pack('C')
           bytes << [@transaction[:network]].pack('C')
           bytes << [@transaction[:type]].pack('C')
           bytes << [@transaction[:timestamp]].pack('V')
@@ -32,7 +32,7 @@ module ArkEcosystem
             bytes << [0x00].pack('C')
           end
 
-          transaction = self.handle(bytes)
+          transaction = handle(bytes)
 
           if @transaction[:signature]
             bytes << BTC::Data.data_from_hex(@transaction[:signature])

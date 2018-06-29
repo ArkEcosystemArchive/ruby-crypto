@@ -5,7 +5,7 @@ module ArkEcosystem
     module Serialisers
       class IPFS < Serialiser
         def handle(bytes)
-          dag = @transaction[:asset][:ipfs][:dag];
+          dag = @transaction[:asset][:ipfs][:dag]
 
           bytes << [dag.length / 2].pack('C')
           bytes << BTC::Data.data_from_hex(dag)

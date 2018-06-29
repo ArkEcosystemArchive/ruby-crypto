@@ -2,16 +2,16 @@ module ArkEcosystem
   module Crypto
     module Models
       class Transaction
-        @@serialiseHandlers = [
-          'Transfer',
-          'SecondSignatureRegistration',
-          'DelegateRegistration',
-          'Vote',
-          'MultiSignatureRegistration',
-          'Ipfs',
-          'TimelockTransfer',
-          'MultiPayment',
-          'DelegateResignation'
+        @@serialiseHandlers = %w[
+          Transfer
+          SecondSignatureRegistration
+          DelegateRegistration
+          Vote
+          MultiSignatureRegistration
+          Ipfs
+          TimelockTransfer
+          MultiPayment
+          DelegateResignation
         ]
 
         def initialize(transaction)

@@ -20,7 +20,7 @@ module ArkEcosystem
               public_key: ArkEcosystem::Crypto::Identity::PublicKey.from_secret_as_hex(secret)
             }
           }
-          self.sign_and_create_id(secret)
+          sign_and_create_id(secret)
         end
 
         def get_type

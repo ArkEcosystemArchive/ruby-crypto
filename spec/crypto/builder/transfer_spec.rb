@@ -8,7 +8,7 @@ require 'arkecosystem/crypto/identity/public_key'
 require 'arkecosystem/crypto/networks/devnet'
 
 describe ArkEcosystem::Crypto::Builder::Transfer do
-  let(:amount) { 133380000000 }
+  let(:amount) { 133_380_000_000 }
   let(:recipient_id) { 'AXoXnFi4z1Z6aFvjEYkDVCtBGW2PaRiM25' }
   let(:vendor_field) { 'This is a transaction from Ruby' }
   let(:secret) { 'this is a top secret passphrase' }
@@ -18,10 +18,10 @@ describe ArkEcosystem::Crypto::Builder::Transfer do
     ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
 
     transaction = described_class.new
-    .set_recipient_id(recipient_id)
-    .set_amount(amount)
-    .set_vendor_field(vendor_field)
-    .sign(secret)
+                                 .set_recipient_id(recipient_id)
+                                 .set_amount(amount)
+                                 .set_vendor_field(vendor_field)
+                                 .sign(secret)
 
     expect(transaction.verify).to be_truthy
   end
@@ -30,11 +30,11 @@ describe ArkEcosystem::Crypto::Builder::Transfer do
     ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
 
     transaction = described_class.new
-    .set_recipient_id(recipient_id)
-    .set_amount(amount)
-    .set_vendor_field(vendor_field)
-    .sign(secret)
-    .second_sign(second_secret)
+                                 .set_recipient_id(recipient_id)
+                                 .set_amount(amount)
+                                 .set_vendor_field(vendor_field)
+                                 .sign(secret)
+                                 .second_sign(second_secret)
 
     second_public_key_address = ArkEcosystem::Crypto::Identity::PublicKey.from_secret_as_hex(second_secret)
 

@@ -25,7 +25,7 @@ module ArkEcosystem
             i += 1
           end
 
-          ArkEcosystem::Crypto::Crypto::parse_signatures(@serialized, transaction, asset_offset + 6 + count * 66)
+          ArkEcosystem::Crypto::Crypto.parse_signatures(@serialized, transaction, asset_offset + 6 + count * 66)
         end
       end
     end

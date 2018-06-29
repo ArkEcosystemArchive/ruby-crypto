@@ -15,7 +15,7 @@ module ArkEcosystem
 
         def sign(secret)
           @recipient_id = ArkEcosystem::Crypto::Identity::Address.from_secret(secret)
-          self.sign_and_create_id(secret)
+          sign_and_create_id(secret)
         end
 
         def get_type

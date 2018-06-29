@@ -9,7 +9,7 @@ module ArkEcosystem
         end
 
         def self.from_secret_as_hex(secret)
-          self.from_secret(secret).unpack('H*').first
+          from_secret(secret).unpack('H*').first
         end
       end
     end

@@ -16,9 +16,9 @@ module ArkEcosystem
       def self.from_json(message)
         message = JSON.parse message
 
-        Message.new({ publickey: message['publickey'],
-                      signature: message['signature'],
-                      message: message['message'] })
+        Message.new(publickey: message['publickey'],
+                    signature: message['signature'],
+                    message: message['message'])
       end
 
       def self.sign(message, passphrase)
@@ -26,9 +26,9 @@ module ArkEcosystem
 
         hash = Digest::SHA256.digest(message)
 
-        from_hash({ publickey: BTC.to_hex(key.public_key),
-                    signature: BTC.to_hex(key.ecdsa_signature(hash)),
-                    message: message })
+        from_hash(publickey: BTC.to_hex(key.public_key),
+                  signature: BTC.to_hex(key.ecdsa_signature(hash)),
+                  message: message)
       end
 
       def verify
@@ -46,7 +46,7 @@ module ArkEcosystem
       end
 
       def to_json
-        self.to_params.to_json
+        to_params.to_json
       end
     end
   end

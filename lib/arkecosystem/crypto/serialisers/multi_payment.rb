@@ -7,7 +7,7 @@ module ArkEcosystem
         def handle(bytes)
           bytes << [@transaction[:asset][:payments].count].pack('Q<')
 
-          @transaction[:asset][:payments].each do |item|
+          @transaction[:asset][:payments].each do |_item|
             bytes << [@item[:amount]].pack('Q<')
 
             recipient_id = BTC::Base58.data_from_base58check(@item[:recipientId])

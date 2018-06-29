@@ -30,36 +30,34 @@ module ArkEcosystem
 
           asset_offset = (41 + 8 + 1) * 2 + vendor_field_length * 2
 
-          transaction = self.handle(asset_offset, transaction)
+          transaction = handle(asset_offset, transaction)
 
-          if !transaction[:amount]
-            transaction[:amount] = 0
-          end
+          transaction[:amount] = 0 unless transaction[:amount]
 
-          if transaction[:version] === 1 || transaction[:version].empty?
+          if transaction[:version] === 1 ||  transaction[:version].empty?
             if transaction[:second_signature]
               transaction[:sign_signature] = transaction[:second_signature]
             end
 
             if transaction[:type] === ArkEcosystem::Crypto::Enums::Types::SECOND_SIGNATURE_REGISTRATION
-              transaction[:recipient_id] = ArkEcosystem::Crypto::Identity::Address::from_public_key(@transaction[:senderPublicKey]);
+              transaction[:recipient_id] = ArkEcosystem::Crypto::Identity::Address.from_public_key(@transaction[:senderPublicKey])
             end
 
             if transaction[:type] === ArkEcosystem::Crypto::Enums::Types::VOTE
-              transaction[:recipient_id] = ArkEcosystem::Crypto::Identity::Address::from_public_key(@transaction[:senderPublicKey]);
+              transaction[:recipient_id] = ArkEcosystem::Crypto::Identity::Address.from_public_key(@transaction[:senderPublicKey])
             end
 
             if transaction[:type] === ArkEcosystem::Crypto::Enums::Types::MULTI_SIGNATURE_REGISTRATION
               # The "recipientId" doesn't exist on v1 multi signature registrations
               # transaction[:recipient_id] = ArkEcosystem::Crypto::Identity::Address::from_public_key(@transaction[:senderPublicKey]);
-              transaction[:asset][:multisignature][:keysgroup] = transaction[:asset][:multisignature][:keysgroup].map! {|key| '+' + key }
+              transaction[:asset][:multisignature][:keysgroup] = transaction[:asset][:multisignature][:keysgroup].map! { |key| '+' + key }
             end
 
             if transaction[:vendor_field_hex]
               transaction[:vendor_field] = BTC::Data.data_from_hex(transaction[:vendor_field_hex])
             end
 
-            if !transaction[:id]
+            unless transaction[:id]
               transaction[:id] = ArkEcosystem::Crypto::Crypto.get_id(transaction)
             end
           end
