@@ -3,6 +3,10 @@ module ArkEcosystem
     module Networks
       # The configuration for the development network.
       class Devnet
+        def self.epoch
+          '2017-03-21T13:00:00.000Z'
+        end
+
         def self.version
           '1e'
         end
