@@ -1,7 +1,4 @@
 require 'spec_helper'
-require 'ostruct'
-
-require 'arkecosystem/crypto/message'
 
 describe ArkEcosystem::Crypto::Message do
   let(:message) { 'This is a message from Ruby' }

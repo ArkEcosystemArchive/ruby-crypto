@@ -1,11 +1,4 @@
 require 'spec_helper'
-require 'ostruct'
-
-require 'btcruby'
-require 'arkecosystem/crypto/crypto'
-require 'arkecosystem/crypto/configuration/network'
-require 'arkecosystem/crypto/networks/devnet'
-require 'arkecosystem/crypto/deserialisers/vote'
 
 describe ArkEcosystem::Crypto::Deserialisers::Vote do
   describe '#deserialise' do
@@ -13,9 +6,8 @@ describe ArkEcosystem::Crypto::Deserialisers::Vote do
       transaction = JSON.parse!(File.read('spec/fixtures/transactions/vote.json'), object_class: OpenStruct)
 
       ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
-      deserialiser = ArkEcosystem::Crypto::Deserialisers::Vote.new(transaction)
 
-      actual = deserialiser.deserialise
+      actual = ArkEcosystem::Crypto::Models::Transaction.deserialise(transaction['serialized'])
 
       expect(actual[:version]).to eq(transaction[:version])
       expect(actual[:network]).to eq(transaction[:network])

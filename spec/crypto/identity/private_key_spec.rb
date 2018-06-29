@@ -1,7 +1,4 @@
 require 'spec_helper'
-require 'ostruct'
-
-require 'arkecosystem/crypto/identity/private_key'
 
 describe ArkEcosystem::Crypto::Identity::PrivateKey do
   let(:secret) { 'this is a top secret passphrase' }

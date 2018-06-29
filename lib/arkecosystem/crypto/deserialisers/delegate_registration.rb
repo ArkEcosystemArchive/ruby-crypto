@@ -1,22 +1,20 @@
-require 'arkecosystem/crypto/deserialisers/deserialiser'
-
 module ArkEcosystem
   module Crypto
     module Deserialisers
       # The deserialiser for delegate registration transactions.
-      class DelegateRegistration < Deserialiser
-        def handle(asset_offset, transaction)
+      class DelegateRegistration
+        def self.deserialise(serialised, binary, asset_offset, transaction)
           transaction[:asset] = {
             delegate: {}
           }
 
-          username_length = @binary.unpack("C#{asset_offset / 2}Q<").last & 0xff
+          username_length = binary.unpack("C#{asset_offset / 2}Q<").last & 0xff
 
-          username = @serialized[asset_offset + 2, username_length * 2]
+          username = serialised[asset_offset + 2, username_length * 2]
 
           transaction[:asset][:delegate][:username] = BTC::Data.data_from_hex(username)
 
-          ArkEcosystem::Crypto::Crypto.parse_signatures(@serialized, transaction, asset_offset + (username_length + 1) * 2)
+          ArkEcosystem::Crypto::Crypto.parse_signatures(serialised, transaction, asset_offset + (username_length + 1) * 2)
         end
       end
     end

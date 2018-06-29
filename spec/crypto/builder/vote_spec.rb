@@ -1,11 +1,4 @@
 require 'spec_helper'
-require 'ostruct'
-
-require 'arkecosystem/crypto/builder/vote'
-require 'arkecosystem/crypto/configuration/network'
-require 'arkecosystem/crypto/crypto'
-require 'arkecosystem/crypto/identity/public_key'
-require 'arkecosystem/crypto/networks/devnet'
 
 describe ArkEcosystem::Crypto::Builder::Vote do
   let(:delegate) { '034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed192' }

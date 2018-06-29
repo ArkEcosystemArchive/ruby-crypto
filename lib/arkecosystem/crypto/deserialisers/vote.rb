@@ -1,23 +1,21 @@
-require 'arkecosystem/crypto/deserialisers/deserialiser'
-
 module ArkEcosystem
   module Crypto
     module Deserialisers
       # The deserialiser for vote transactions.
-      class Vote < Deserialiser
-        def handle(asset_offset, transaction)
+      class Vote
+        def self.deserialise(serialised, binary, asset_offset, transaction)
           transaction[:asset] = {
             votes: []
           }
 
-          vote_length = @binary.unpack("C#{asset_offset / 2}Q<").last & 0xff
+          vote_length = binary.unpack("C#{asset_offset / 2}Q<").last & 0xff
 
           i = 0
           while i < vote_length
             index_start = asset_offset + 2 + i * 2 * 34
             index_end = 2 * 34
 
-            vote = @serialized[index_start, index_end]
+            vote = serialised[index_start, index_end]
             vote = (vote[1] == '1' ? '+' : '-') + vote[2..-1]
 
             transaction[:asset][:votes].push(vote)
@@ -25,7 +23,7 @@ module ArkEcosystem
             i += 1
           end
 
-          ArkEcosystem::Crypto::Crypto.parse_signatures(@serialized, transaction, asset_offset + 2 + vote_length * 34 * 2)
+          ArkEcosystem::Crypto::Crypto.parse_signatures(serialised, transaction, asset_offset + 2 + vote_length * 34 * 2)
         end
       end
     end

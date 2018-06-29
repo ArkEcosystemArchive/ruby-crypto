@@ -1,4 +1,7 @@
 require 'bundler/setup'
+require 'ostruct'
+require 'btcruby'
+require 'arkecosystem/crypto'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

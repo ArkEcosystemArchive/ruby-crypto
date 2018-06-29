@@ -3,42 +3,12 @@ module ArkEcosystem
     module Models
       # The model of a transaction.
       class Transaction
-        def initialize(transaction)
-          @transaction = transaction
-
-          @serialise_handlers = %w[
-            Transfer
-            SecondSignatureRegistration
-            DelegateRegistration
-            Vote
-            MultiSignatureRegistration
-            Ipfs
-            TimelockTransfer
-            MultiPayment
-            DelegateResignation
-          ]
+        def self.serialise(transaction)
+          ArkEcosystem::Crypto::Serialiser.new(transaction).serialise
         end
 
-        def self.from_hash(transaction)
-          Transaction.new(transaction)
-        end
-
-        def self.from_json(transaction)
-          transaction = JSON.parse transaction
-
-          Transaction.new(transaction)
-        end
-
-        def serialise
-          type = @serialise_handlers[@transaction[:type]]
-
-          Object.const_get("ArkEcosystem::Crypto::Serialisers::#{type}").new(@transaction).serialise
-        end
-
-        def deserialise
-          type = @serialise_handlers[@transaction[:type]]
-
-          Object.const_get("ArkEcosystem::Crypto::Deserialisers::#{type}").new(@transaction).deserialise
+        def self.deserialise(serialised)
+          ArkEcosystem::Crypto::Deserialiser.new(serialised).deserialise
         end
       end
     end

@@ -1,14 +1,12 @@
-require 'arkecosystem/crypto/serialisers/serialiser'
-
 module ArkEcosystem
   module Crypto
     module Serialisers
       # The serialiser for multi payment transactions.
-      class MultiPayment < Serialiser
-        def handle(bytes)
-          bytes << [@transaction[:asset][:payments].count].pack('Q<')
+      class MultiPayment
+        def self.serialise(transaction, bytes)
+          bytes << [transaction[:asset][:payments].count].pack('Q<')
 
-          @transaction[:asset][:payments].each do |_item|
+          transaction[:asset][:payments].each do |_item|
             bytes << [@item[:amount]].pack('Q<')
 
             recipient_id = BTC::Base58.data_from_base58check(@item[:recipientId])

@@ -1,18 +1,16 @@
-require 'arkecosystem/crypto/deserialisers/deserialiser'
-
 module ArkEcosystem
   module Crypto
     module Deserialisers
       # The deserialiser for second signature registrations transactions.
-      class SecondSignatureRegistration < Deserialiser
-        def handle(asset_offset, transaction)
+      class SecondSignatureRegistration
+        def self.deserialise(serialised, _binary, asset_offset, transaction)
           transaction[:asset] = {
             signature: {}
           }
 
-          transaction[:asset][:signature][:public_key] = @serialized[asset_offset, 66]
+          transaction[:asset][:signature][:public_key] = serialised[asset_offset, 66]
 
-          ArkEcosystem::Crypto::Crypto.parse_signatures(@serialized, transaction, asset_offset + 66)
+          ArkEcosystem::Crypto::Crypto.parse_signatures(serialised, transaction, asset_offset + 66)
         end
       end
     end

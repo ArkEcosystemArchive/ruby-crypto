@@ -1,11 +1,4 @@
 require 'spec_helper'
-require 'ostruct'
-
-require 'arkecosystem/crypto/builder/delegate_registration'
-require 'arkecosystem/crypto/configuration/network'
-require 'arkecosystem/crypto/crypto'
-require 'arkecosystem/crypto/identity/public_key'
-require 'arkecosystem/crypto/networks/devnet'
 
 describe ArkEcosystem::Crypto::Builder::DelegateRegistration do
   let(:secret) { 'this is a top secret passphrase' }

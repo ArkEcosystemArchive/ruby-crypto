@@ -1,9 +1,4 @@
 require 'spec_helper'
-require 'ostruct'
-
-require 'arkecosystem/crypto/identity/address'
-require 'arkecosystem/crypto/identity/private_key'
-require 'arkecosystem/crypto/networks/devnet'
 
 describe ArkEcosystem::Crypto::Identity::Address do
   let(:secret) { 'this is a top secret passphrase' }
