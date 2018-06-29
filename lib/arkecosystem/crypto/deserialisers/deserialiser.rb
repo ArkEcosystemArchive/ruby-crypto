@@ -3,6 +3,7 @@ require 'arkecosystem/crypto/identity/address'
 module ArkEcosystem
   module Crypto
     module Deserialisers
+      # The base deserialiser for transactions.
       class Deserialiser
         def initialize(transaction)
           @transaction = transaction
@@ -34,32 +35,40 @@ module ArkEcosystem
 
           transaction[:amount] = 0 unless transaction[:amount]
 
-          if transaction[:version] === 1 ||  transaction[:version].empty?
-            if transaction[:second_signature]
-              transaction[:sign_signature] = transaction[:second_signature]
-            end
+          if transaction[:version] == 1 || transaction[:version].empty?
+            transaction = handle_version_one(transaction)
+          end
 
-            if transaction[:type] === ArkEcosystem::Crypto::Enums::Types::SECOND_SIGNATURE_REGISTRATION
-              transaction[:recipient_id] = ArkEcosystem::Crypto::Identity::Address.from_public_key(@transaction[:senderPublicKey])
-            end
+          transaction
+        end
 
-            if transaction[:type] === ArkEcosystem::Crypto::Enums::Types::VOTE
-              transaction[:recipient_id] = ArkEcosystem::Crypto::Identity::Address.from_public_key(@transaction[:senderPublicKey])
-            end
+        private
 
-            if transaction[:type] === ArkEcosystem::Crypto::Enums::Types::MULTI_SIGNATURE_REGISTRATION
-              # The "recipientId" doesn't exist on v1 multi signature registrations
-              # transaction[:recipient_id] = ArkEcosystem::Crypto::Identity::Address::from_public_key(@transaction[:senderPublicKey]);
-              transaction[:asset][:multisignature][:keysgroup] = transaction[:asset][:multisignature][:keysgroup].map! { |key| '+' + key }
-            end
+        def handle_version_one(transaction)
+          if transaction[:second_signature]
+            transaction[:sign_signature] = transaction[:second_signature]
+          end
 
-            if transaction[:vendor_field_hex]
-              transaction[:vendor_field] = BTC::Data.data_from_hex(transaction[:vendor_field_hex])
-            end
+          if transaction[:type] == ArkEcosystem::Crypto::Enums::Types::SECOND_SIGNATURE_REGISTRATION
+            transaction[:recipient_id] = ArkEcosystem::Crypto::Identity::Address.from_public_key(@transaction[:senderPublicKey])
+          end
 
-            unless transaction[:id]
-              transaction[:id] = ArkEcosystem::Crypto::Crypto.get_id(transaction)
-            end
+          if transaction[:type] == ArkEcosystem::Crypto::Enums::Types::VOTE
+            transaction[:recipient_id] = ArkEcosystem::Crypto::Identity::Address.from_public_key(@transaction[:senderPublicKey])
+          end
+
+          if transaction[:type] == ArkEcosystem::Crypto::Enums::Types::MULTI_SIGNATURE_REGISTRATION
+            # The "recipientId" doesn't exist on v1 multi signature registrations
+            # transaction[:recipient_id] = ArkEcosystem::Crypto::Identity::Address::from_public_key(@transaction[:senderPublicKey]);
+            transaction[:asset][:multisignature][:keysgroup] = transaction[:asset][:multisignature][:keysgroup].map! { |key| '+' + key }
+          end
+
+          if transaction[:vendor_field_hex]
+            transaction[:vendor_field] = BTC::Data.data_from_hex(transaction[:vendor_field_hex])
+          end
+
+          unless transaction[:id]
+            transaction[:id] = ArkEcosystem::Crypto::Crypto.get_id(transaction)
           end
 
           transaction

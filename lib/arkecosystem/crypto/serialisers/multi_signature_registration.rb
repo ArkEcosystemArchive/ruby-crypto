@@ -3,13 +3,14 @@ require 'arkecosystem/crypto/serialisers/serialiser'
 module ArkEcosystem
   module Crypto
     module Serialisers
+      # The serialiser for multi signature registrations transactions.
       class MultiSignatureRegistration < Serialiser
         def handle(bytes)
           keysgroup = []
 
-          if @transaction[:version] === 1
+          if @transaction[:version] == 1 || @transaction[:version].empty?
             @transaction[:asset][:multisignature][:keysgroup].each do |item|
-              if '+' === item[0]
+              if item.start_with?('+')
                 keysgroup.push(item[1..-1])
               else
                 keysgroup.push(item)

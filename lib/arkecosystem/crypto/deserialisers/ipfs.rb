@@ -3,6 +3,7 @@ require 'arkecosystem/crypto/deserialisers/deserialiser'
 module ArkEcosystem
   module Crypto
     module Deserialisers
+      # The deserialiser for IPFS transactions.
       class IPFS < Deserialiser
         def handle(asset_offset, transaction)
           transaction[:asset] = {}

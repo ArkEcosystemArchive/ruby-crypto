@@ -1,8 +1,9 @@
 module ArkEcosystem
   module Crypto
     module Models
+      # The model of a transaction.
       class Transaction
-        @@serialiseHandlers = %w[
+        @serialise_handlers = %w[
           Transfer
           SecondSignatureRegistration
           DelegateRegistration
@@ -29,13 +30,13 @@ module ArkEcosystem
         end
 
         def serialise
-          type = @@serialiseHandlers[@transaction[:type]]
+          type = @serialise_handlers[@transaction[:type]]
 
           Object.const_get("ArkEcosystem::Crypto::Serialisers::#{type}").new(@transaction).serialise
         end
 
         def deserialise
-          type = @@serialiseHandlers[@transaction[:type]]
+          type = @serialise_handlers[@transaction[:type]]
 
           Object.const_get("ArkEcosystem::Crypto::Deserialisers::#{type}").new(@transaction).deserialise
         end

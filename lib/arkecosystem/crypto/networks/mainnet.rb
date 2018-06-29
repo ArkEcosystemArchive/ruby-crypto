@@ -1,6 +1,7 @@
 module ArkEcosystem
   module Crypto
     module Networks
+      # The configuration for the main network.
       class Mainnet
         def self.version
           '17'

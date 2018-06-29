@@ -7,6 +7,7 @@ require 'arkecosystem/crypto/builder/transaction'
 module ArkEcosystem
   module Crypto
     module Builder
+      # The builder for second signature registration transactions.
       class SecondSignatureRegistration < Transaction
         def set_second_secret(second_secret)
           @asset = {
@@ -17,7 +18,7 @@ module ArkEcosystem
           self
         end
 
-        def get_type
+        def type
           ArkEcosystem::Crypto::Enums::Types::SECOND_SIGNATURE_REGISTRATION
         end
       end

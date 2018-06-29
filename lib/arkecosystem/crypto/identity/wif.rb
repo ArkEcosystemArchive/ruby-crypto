@@ -3,6 +3,7 @@ require 'btcruby'
 module ArkEcosystem
   module Crypto
     module Identity
+      # The identity utility for a WIF.
       class WIF
         def self.from_secret(secret, network = nil)
           network ||= ArkEcosystem::Crypto::Configuration::Network.get

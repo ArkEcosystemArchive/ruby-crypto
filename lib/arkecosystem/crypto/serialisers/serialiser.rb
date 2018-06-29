@@ -1,6 +1,7 @@
 module ArkEcosystem
   module Crypto
     module Serialisers
+      # The base serialiser for transactions.
       class Serialiser
         def initialize(transaction)
           @transaction = transaction
@@ -18,6 +19,16 @@ module ArkEcosystem
           bytes << [@transaction[:senderPublicKey]].pack('H*')
           bytes << [@transaction[:fee]].pack('Q<')
 
+          bytes = handle_vendor_field(bytes)
+          bytes = handle(bytes)
+          bytes = handle_signatures(bytes)
+
+          BTC::Data.hex_from_data(bytes)
+        end
+
+        private
+
+        def handle_vendor_field(bytes)
           if @transaction[:vendorField]
             vendor_field_length = @transaction[:vendorField].length
 
@@ -32,8 +43,10 @@ module ArkEcosystem
             bytes << [0x00].pack('C')
           end
 
-          transaction = handle(bytes)
+          bytes
+        end
 
+        def handle_signatures(bytes)
           if @transaction[:signature]
             bytes << BTC::Data.data_from_hex(@transaction[:signature])
           end
@@ -49,7 +62,7 @@ module ArkEcosystem
             bytes << BTC::Data.data_from_hex(@transaction[:signatures].join(''))
           end
 
-          BTC::Data.hex_from_data(bytes)
+          bytes
         end
       end
     end

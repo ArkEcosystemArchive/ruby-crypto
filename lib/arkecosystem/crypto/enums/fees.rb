@@ -1,6 +1,7 @@
 module ArkEcosystem
   module Crypto
     module Enums
+      # The list of available tansaction fees.
       class Fees
         TRANSFER = 10_000_000
         SECOND_SIGNATURE_REGISTRATION = 500_000_000

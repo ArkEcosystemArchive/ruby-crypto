@@ -4,6 +4,7 @@ require 'arkecosystem/crypto/configuration/network'
 module ArkEcosystem
   module Crypto
     module Identity
+      # The identity utility for an address.
       class Address
         def self.from_secret(secret, network = nil)
           private_key = PrivateKey.from_secret(secret)

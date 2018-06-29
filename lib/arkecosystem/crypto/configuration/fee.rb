@@ -3,6 +3,7 @@ require 'arkecosystem/crypto/enums/fees'
 module ArkEcosystem
   module Crypto
     module Configuration
+      # The holder of fee configuration.
       class Fee
         @fees = [
           ArkEcosystem::Crypto::Enums::Fees::TRANSFER,

@@ -3,6 +3,7 @@ require 'arkecosystem/crypto/serialisers/serialiser'
 module ArkEcosystem
   module Crypto
     module Serialisers
+      # The serialiser for delegate registration transactions.
       class DelegateRegistration < Serialiser
         def handle(bytes)
           delegate_bytes = BTC::Data.hex_from_data(@transaction[:asset][:delegate][:username])

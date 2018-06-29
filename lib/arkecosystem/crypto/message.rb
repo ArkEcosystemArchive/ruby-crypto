@@ -2,6 +2,7 @@ require 'arkecosystem/crypto/crypto'
 
 module ArkEcosystem
   module Crypto
+    # The builder to work with signed messages.
     class Message
       def initialize(message)
         @public_key = message[:publickey]
@@ -22,7 +23,7 @@ module ArkEcosystem
       end
 
       def self.sign(message, passphrase)
-        key = Crypto.get_key(passphrase)
+        key = ArkEcosystem::Crypto::Identity::PrivateKey.from_secret(passphrase)
 
         hash = Digest::SHA256.digest(message)
 
@@ -32,7 +33,7 @@ module ArkEcosystem
       end
 
       def verify
-        key = Crypto.get_public_key(BTC.from_hex(@public_key))
+        key = BTC::Key.new(public_key: BTC.from_hex(@public_key))
 
         hash = Digest::SHA256.digest(@message)
 

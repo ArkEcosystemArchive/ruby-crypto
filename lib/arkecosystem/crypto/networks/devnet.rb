@@ -1,6 +1,7 @@
 module ArkEcosystem
   module Crypto
     module Networks
+      # The configuration for the development network.
       class Devnet
         def self.version
           '1e'

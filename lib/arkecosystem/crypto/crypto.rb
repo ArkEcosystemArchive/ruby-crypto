@@ -3,21 +3,10 @@ require 'arkecosystem/crypto/enums/types'
 
 module ArkEcosystem
   module Crypto
+    # The shared cryptography methods.
     class Crypto
       def self.get_id(transaction)
         Digest::SHA256.digest(get_bytes(transaction, false, false)).unpack('H*').first
-      end
-
-      def self.get_key(secret)
-        BTC::Key.new(private_key: Digest::SHA256.digest(secret), public_key_compressed: true)
-      end
-
-      def self.get_address(key, network_address = '17')
-        BTC::Base58.base58check_from_data([network_address.to_i(16)].pack('c') + Digest::RMD160.digest(key.public_key))
-      end
-
-      def self.get_public_key(public_key)
-        BTC::Key.new(public_key: public_key)
       end
 
       def self.get_bytes(transaction, skip_signature = true, skip_second_signature = true)
@@ -109,17 +98,15 @@ module ArkEcosystem
 
           if transaction[:second_signature].empty?
             transaction.delete(:second_signature)
+          elsif transaction[:second_signature][0, 2] == 'ff'
+            transaction.delete(:second_signature)
           else
-            if 'ff' === transaction[:second_signature][0, 2]
-              transaction.delete(:second_signature)
-            else
-              # Second Signature
-              second_signature_length = signature[2, 2].to_i(16) + 2
-              transaction[:second_signature] = transaction[:second_signature][0, second_signature_length * 2]
+            # Second Signature
+            second_signature_length = signature[2, 2].to_i(16) + 2
+            transaction[:second_signature] = transaction[:second_signature][0, second_signature_length * 2]
 
-              # Multi Signature
-              multi_signature_offset += second_signature_length * 2
-            end
+            # Multi Signature
+            multi_signature_offset += second_signature_length * 2
           end
 
           # All Signatures

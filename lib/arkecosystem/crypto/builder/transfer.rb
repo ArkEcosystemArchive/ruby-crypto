@@ -6,6 +6,7 @@ require 'arkecosystem/crypto/builder/transaction'
 module ArkEcosystem
   module Crypto
     module Builder
+      # The builder for transfer transactions.
       class Transfer < Transaction
         def set_recipient_id(recipient_id)
           @recipient_id = recipient_id
@@ -22,7 +23,7 @@ module ArkEcosystem
           self
         end
 
-        def get_type
+        def type
           ArkEcosystem::Crypto::Enums::Types::TRANSFER
         end
       end

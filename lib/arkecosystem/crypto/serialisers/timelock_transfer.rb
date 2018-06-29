@@ -3,6 +3,7 @@ require 'arkecosystem/crypto/serialisers/serialiser'
 module ArkEcosystem
   module Crypto
     module Serialisers
+      # The serialiser for timelock transfer transactions.
       class TimelockTransfer < Serialiser
         def handle(bytes)
           bytes << [@transaction[:amount]].pack('Q<')

@@ -6,6 +6,7 @@ require 'arkecosystem/crypto/builder/transaction'
 module ArkEcosystem
   module Crypto
     module Builder
+      # The builder for multi signature registration transactions.
       class MultiSignatureRegistration < Transaction
         def initialize
           super
@@ -35,7 +36,7 @@ module ArkEcosystem
           sign_and_create_id(secret)
         end
 
-        def get_type
+        def type
           ArkEcosystem::Crypto::Enums::Types::MULTI_SIGNATURE_REGISTRATION
         end
       end

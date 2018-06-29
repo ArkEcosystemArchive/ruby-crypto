@@ -3,6 +3,7 @@ require 'arkecosystem/crypto/deserialisers/deserialiser'
 module ArkEcosystem
   module Crypto
     module Deserialisers
+      # The deserialiser for multi signature registrations transactions.
       class MultiSignatureRegistration < Deserialiser
         def handle(asset_offset, transaction)
           transaction[:asset] = {

@@ -3,6 +3,7 @@ require 'arkecosystem/crypto/serialisers/serialiser'
 module ArkEcosystem
   module Crypto
     module Serialisers
+      # The serialiser for multi payment transactions.
       class MultiPayment < Serialiser
         def handle(bytes)
           bytes << [@transaction[:asset][:payments].count].pack('Q<')

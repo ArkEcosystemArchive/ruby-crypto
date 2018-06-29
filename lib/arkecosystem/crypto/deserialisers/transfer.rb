@@ -3,6 +3,7 @@ require 'arkecosystem/crypto/deserialisers/deserialiser'
 module ArkEcosystem
   module Crypto
     module Deserialisers
+      # The deserialiser for transfer transactions.
       class Transfer < Deserialiser
         def handle(asset_offset, transaction)
           transaction[:amount] = @binary.unpack("C#{asset_offset / 2}Q<").last

@@ -3,6 +3,7 @@ require 'arkecosystem/crypto/deserialisers/deserialiser'
 module ArkEcosystem
   module Crypto
     module Deserialisers
+      # The deserialiser for vote transactions.
       class Vote < Deserialiser
         def handle(asset_offset, transaction)
           transaction[:asset] = {
@@ -17,7 +18,7 @@ module ArkEcosystem
             index_end = 2 * 34
 
             vote = @serialized[index_start, index_end]
-            vote = ('1' === vote[1] ? '+' : '-') + vote[2..-1]
+            vote = (vote[1] == '1' ? '+' : '-') + vote[2..-1]
 
             transaction[:asset][:votes].push(vote)
 

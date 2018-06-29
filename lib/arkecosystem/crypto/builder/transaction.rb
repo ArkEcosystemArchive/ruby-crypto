@@ -8,11 +8,12 @@ require 'deep_hash_transform'
 module ArkEcosystem
   module Crypto
     module Builder
+      # The base builder for transactions.
       class Transaction
         attr_accessor :amount, :asset, :fee, :id, :recipient_id, :sender_public_key, :sign_signature, :signature, :timestamp, :type, :vendor_field
 
         def initialize
-          @type = get_type
+          @type = type
           @fee = ArkEcosystem::Crypto::Configuration::Fee.get(@type)
           @sender_public_key = nil
           @recipient_id = nil
@@ -39,7 +40,7 @@ module ArkEcosystem
         end
 
         def second_sign(second_secret)
-          second_key = ArkEcosystem::Crypto::Crypto.get_key(second_secret)
+          second_key = ArkEcosystem::Crypto::Identity::PrivateKey.from_secret(second_secret)
 
           bytes = ArkEcosystem::Crypto::Crypto.get_bytes(to_hash, false)
 
@@ -96,7 +97,7 @@ module ArkEcosystem
 
         def snake_case_to_camel_case(string)
           string.to_s.split('_').enum_for(:each_with_index).collect do |s, index|
-            index == 0 ? s : s.capitalize
+            index.zero? ? s : s.capitalize
           end.join
         end
       end

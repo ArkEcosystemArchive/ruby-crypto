@@ -3,12 +3,13 @@ require 'arkecosystem/crypto/serialisers/serialiser'
 module ArkEcosystem
   module Crypto
     module Serialisers
+      # The serialiser for vote transactions.
       class Vote < Serialiser
         def handle(bytes)
           vote_bytes = []
 
           @transaction[:asset][:votes].each do |item|
-            prefix = '+' === item[0] ? '01' : '00'
+            prefix = item.start_with?('+') ? '01' : '00'
 
             puts prefix + item[1..-1]
             vote_bytes.push(prefix + item[1..-1])

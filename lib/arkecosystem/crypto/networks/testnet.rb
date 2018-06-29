@@ -1,6 +1,7 @@
 module ArkEcosystem
   module Crypto
     module Networks
+      # The configuration for the test network.
       class Testnet
         def self.version
           '17'

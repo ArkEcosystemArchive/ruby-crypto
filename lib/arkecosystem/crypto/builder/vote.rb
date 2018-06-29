@@ -7,6 +7,7 @@ require 'arkecosystem/crypto/builder/transaction'
 module ArkEcosystem
   module Crypto
     module Builder
+      # The builder for vote transactions.
       class Vote < Transaction
         def set_votes(votes)
           @asset[:votes] = votes
@@ -18,7 +19,7 @@ module ArkEcosystem
           sign_and_create_id(secret)
         end
 
-        def get_type
+        def type
           ArkEcosystem::Crypto::Enums::Types::VOTE
         end
       end

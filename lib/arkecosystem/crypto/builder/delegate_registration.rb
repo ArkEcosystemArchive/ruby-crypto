@@ -7,6 +7,7 @@ require 'arkecosystem/crypto/builder/transaction'
 module ArkEcosystem
   module Crypto
     module Builder
+      # The builder for delegate registration transactions.
       class DelegateRegistration < Transaction
         def set_username(username)
           @username = username
@@ -23,7 +24,7 @@ module ArkEcosystem
           sign_and_create_id(secret)
         end
 
-        def get_type
+        def type
           ArkEcosystem::Crypto::Enums::Types::DELEGATE_REGISTRATION
         end
       end

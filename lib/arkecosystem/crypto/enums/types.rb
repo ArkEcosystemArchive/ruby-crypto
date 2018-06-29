@@ -1,6 +1,7 @@
 module ArkEcosystem
   module Crypto
     module Enums
+      # The list of available tansaction types.
       class Types
         TRANSFER = 0
         SECOND_SIGNATURE_REGISTRATION = 1
