@@ -95,7 +95,7 @@ module ArkEcosystem
         def seconds_after_epoch
           network = ArkEcosystem::Crypto::Configuration::Network.get
 
-          (Time.now.utc - DateTime.parse(network.epoch).to_time.to_i).to_i
+          (Time.now.utc - Date.parse(network.epoch).to_time.to_i).to_i
         end
 
         def snake_case_to_camel_case(string)
