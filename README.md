@@ -28,6 +28,10 @@ Or install it yourself as:
 
     $ gem install arkecosystem-crypto
 
+## Documentation
+
+Have a look at the [official documentation](https://docs.ark.io/v1.0/docs/cryptography-ruby) for advanced examples and features.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, copy and edit the contents of the `.env.example` file into a file called `.env`. This file represents your network and account details. You can then run the tests using `rake spec`. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
