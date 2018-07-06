@@ -22,7 +22,7 @@ module ArkEcosystem
       end
 
       def deserialise
-        transaction = {}
+        transaction = ArkEcosystem::Crypto::Transaction.new()
         transaction[:version] = @binary.unpack('C2').last
         transaction[:network] = @binary.unpack('C3').last
         transaction[:type] = @binary.unpack('C4').last
@@ -84,7 +84,7 @@ module ArkEcosystem
         end
 
         unless transaction[:id]
-          transaction[:id] = ArkEcosystem::Crypto::Crypto.get_id(transaction)
+          transaction[:id] = transaction.get_id
         end
 
         transaction

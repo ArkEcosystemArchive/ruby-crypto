@@ -10,7 +10,7 @@ module ArkEcosystem
 
           @transaction[:asset][:signature][:public_key] = @serialised[@asset_offset, 66]
 
-          ArkEcosystem::Crypto::Crypto.parse_signatures(@serialised, @transaction, @asset_offset + 66)
+          @transaction.parse_signatures(@serialised, @asset_offset + 66)
         end
       end
     end

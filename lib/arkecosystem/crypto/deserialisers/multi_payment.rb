@@ -30,7 +30,7 @@ module ArkEcosystem
 
           products.each { |item| @transaction[:amount] += item[:amount] }
 
-          ArkEcosystem::Crypto::Crypto.parse_signatures(@serialised, @transaction, offset * 2)
+          @transaction.parse_signatures(@serialised, offset * 2)
         end
       end
     end

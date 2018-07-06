@@ -10,7 +10,7 @@ module ArkEcosystem
 
           @transaction[:asset][:dag] = @serialised[@asset_offset + 2, dag_length * 2]
 
-          ArkEcosystem::Crypto::Crypto.parse_signatures(@serialised, @transaction, @asset_offset + 2 + length * 2)
+          @transaction.parse_signatures(@serialised, @asset_offset + 2 + length * 2)
         end
       end
     end

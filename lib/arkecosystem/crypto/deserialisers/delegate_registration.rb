@@ -14,7 +14,7 @@ module ArkEcosystem
 
           @transaction[:asset][:delegate][:username] = BTC::Data.data_from_hex(username)
 
-          ArkEcosystem::Crypto::Crypto.parse_signatures(@serialised, @transaction, @asset_offset + (username_length + 1) * 2)
+          @transaction.parse_signatures(@serialised, @asset_offset + (username_length + 1) * 2)
         end
       end
     end

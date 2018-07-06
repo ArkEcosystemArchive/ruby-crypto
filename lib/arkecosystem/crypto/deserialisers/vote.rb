@@ -23,7 +23,7 @@ module ArkEcosystem
             i += 1
           end
 
-          ArkEcosystem::Crypto::Crypto.parse_signatures(@serialised, @transaction, @asset_offset + 2 + vote_length * 34 * 2)
+          @transaction.parse_signatures(@serialised, @asset_offset + 2 + vote_length * 34 * 2)
         end
       end
     end
