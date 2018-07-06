@@ -20,7 +20,7 @@ module ArkEcosystem
           @recipient_id = nil
           @amount = 0
           @vendor_field = nil
-          @timestamp = seconds_after_epoch
+          @timestamp = ArkEcosystem::Crypto::Slot.get_time
           @asset = {}
         end
 
@@ -32,10 +32,10 @@ module ArkEcosystem
           private_key = ArkEcosystem::Crypto::Identity::PrivateKey.from_secret(secret)
           @sender_public_key = private_key.public_key.unpack('H*').first
 
-          transaction_bytes = ArkEcosystem::Crypto::Crypto.get_bytes(to_hash)
+          transaction_bytes = ArkEcosystem::Crypto::Crypto.to_bytes(to_hash)
           @signature = private_key.ecdsa_signature(Digest::SHA256.digest(transaction_bytes)).unpack('H*').first
 
-          transaction_bytes = ArkEcosystem::Crypto::Crypto.get_bytes(to_hash, false, false)
+          transaction_bytes = ArkEcosystem::Crypto::Crypto.to_bytes(to_hash, false, false)
           @id = Digest::SHA256.digest(transaction_bytes).unpack('H*').first
           self
         end
@@ -43,7 +43,7 @@ module ArkEcosystem
         def second_sign(second_secret)
           second_key = ArkEcosystem::Crypto::Identity::PrivateKey.from_secret(second_secret)
 
-          bytes = ArkEcosystem::Crypto::Crypto.get_bytes(to_hash, false)
+          bytes = ArkEcosystem::Crypto::Crypto.to_bytes(to_hash, false)
 
           @sign_signature = second_key.ecdsa_signature(Digest::SHA256.digest(bytes)).unpack('H*').first
           self
@@ -91,12 +91,6 @@ module ArkEcosystem
         end
 
         private
-
-        def seconds_after_epoch
-          network = ArkEcosystem::Crypto::Configuration::Network.get
-
-          (Time.now.utc - Time.parse(network.epoch).to_time.to_i).to_i
-        end
 
         def snake_case_to_camel_case(string)
           string.to_s.split('_').enum_for(:each_with_index).collect do |s, index|

@@ -3,23 +3,68 @@ require 'arkecosystem/crypto/enums/types'
 
 module ArkEcosystem
   module Crypto
-    # The shared cryptography methods.
-    class Crypto
-      def self.get_id(transaction)
-        Digest::SHA256.digest(get_bytes(transaction, false, false)).unpack('H*').first
+    # The model of a transaction.
+    class Transaction
+      def serialise(transaction)
+        ArkEcosystem::Crypto::Serialiser.new(transaction).serialise
       end
 
-      def self.get_bytes(transaction, skip_signature = true, skip_second_signature = true)
+      def deserialise(serialised)
+        ArkEcosystem::Crypto::Deserialiser.new(serialised).deserialise
+      end
+
+      def self.get_id(transaction)
+        Digest::SHA256.digest(to_bytes(transaction, false, false)).unpack('H*').first
+      end
+
+      def self.sign_and_create_id(secret)
+        private_key = ArkEcosystem::Crypto::Identity::PrivateKey.from_secret(secret)
+        @sender_public_key = private_key.public_key.unpack('H*').first
+
+        transaction_bytes = ArkEcosystem::Crypto::Crypto.to_bytes(to_hash)
+        @signature = private_key.ecdsa_signature(Digest::SHA256.digest(transaction_bytes)).unpack('H*').first
+
+        transaction_bytes = ArkEcosystem::Crypto::Crypto.to_bytes(to_hash, false, false)
+        @id = Digest::SHA256.digest(transaction_bytes).unpack('H*').first
+        self
+      end
+
+      def self.second_sign(second_secret)
+        second_key = ArkEcosystem::Crypto::Identity::PrivateKey.from_secret(second_secret)
+
+        bytes = ArkEcosystem::Crypto::Crypto.to_bytes(to_hash, false)
+
+        @sign_signature = second_key.ecdsa_signature(Digest::SHA256.digest(bytes)).unpack('H*').first
+        self
+      end
+
+      def self.verify(transaction)
+        public_only_key = BTC::Key.new(public_key: [transaction.sender_public_key].pack('H*'))
+
+        bytes = ArkEcosystem::Crypto::Crypto.to_bytes(transaction.to_hash)
+
+        public_only_key.verify_ecdsa_signature([transaction.signature].pack('H*'), Digest::SHA256.digest(bytes))
+      end
+
+      def self.second_verify(transaction, second_public_key_hex)
+        public_only_key = BTC::Key.new(public_key: [second_public_key_hex].pack('H*'))
+
+        bytes = ArkEcosystem::Crypto::Crypto.to_bytes(transaction.to_hash, false)
+
+        public_only_key.verify_ecdsa_signature([transaction.sign_signature].pack('H*'), Digest::SHA256.digest(bytes))
+      end
+
+      def self.to_bytes(transaction, skip_signature = true, skip_second_signature = true)
         bytes = ''
         bytes << [transaction[:type]].pack('c')
         bytes << [transaction[:timestamp]].pack('V')
         bytes << [transaction[:sender_public_key]].pack('H*')
 
         bytes << if transaction[:recipient_id]
-                   BTC::Base58.data_from_base58check(transaction[:recipient_id])
-                 else
-                   [].pack('x21')
-                 end
+        BTC::Base58.data_from_base58check(transaction[:recipient_id])
+        else
+          [].pack('x21')
+        end
 
         if transaction[:vendor_field]
           bytes << transaction[:vendor_field]
@@ -60,22 +105,6 @@ module ArkEcosystem
         end
 
         bytes
-      end
-
-      def self.verify(transaction)
-        public_only_key = BTC::Key.new(public_key: [transaction.sender_public_key].pack('H*'))
-
-        bytes = ArkEcosystem::Crypto::Crypto.get_bytes(transaction.to_hash)
-
-        public_only_key.verify_ecdsa_signature([transaction.signature].pack('H*'), Digest::SHA256.digest(bytes))
-      end
-
-      def self.second_verify(transaction, second_public_key_hex)
-        public_only_key = BTC::Key.new(public_key: [second_public_key_hex].pack('H*'))
-
-        bytes = ArkEcosystem::Crypto::Crypto.get_bytes(transaction.to_hash, false)
-
-        public_only_key.verify_ecdsa_signature([transaction.sign_signature].pack('H*'), Digest::SHA256.digest(bytes))
       end
 
       def self.parse_signatures(serialized, transaction, start_offset)
