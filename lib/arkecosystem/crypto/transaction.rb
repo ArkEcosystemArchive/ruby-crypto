@@ -5,7 +5,7 @@ module ArkEcosystem
   module Crypto
     # The model of a transaction.
     class Transaction
-      attr_accessor :amount, :asset, :fee, :id, :recipient_id, :sender_public_key, :sign_signature, :second_signature, :signature, :signatures, :timestamp, :type, :vendor_field, :vendor_field_hex
+      attr_accessor :amount, :asset, :fee, :id, :recipient_id, :sender_public_key, :sign_signature, :second_signature, :signature, :signatures, :timestamp, :type, :vendor_field, :vendor_field_hex, :version, :network, :expiration, :timelocktype, :timelock
 
       def serialise(transaction)
         ArkEcosystem::Crypto::Serialiser.new(transaction).serialise
@@ -15,35 +15,35 @@ module ArkEcosystem
         ArkEcosystem::Crypto::Deserialiser.new(serialised).deserialise
       end
 
-      def self.get_id
+      def get_id
         Digest::SHA256.digest(to_bytes(false, false)).unpack('H*').first
       end
 
-      def self.sign(secret)
+      def sign(secret)
         private_key = ArkEcosystem::Crypto::Identity::PrivateKey.from_secret(secret)
         @sender_public_key = private_key.public_key.unpack('H*').first
         @signature = private_key.ecdsa_signature(Digest::SHA256.digest(to_bytes)).unpack('H*').first
         self
       end
 
-      def self.second_sign(second_secret)
+      def second_sign(second_secret)
         second_key = ArkEcosystem::Crypto::Identity::PrivateKey.from_secret(second_secret)
 
         @sign_signature = second_key.ecdsa_signature(Digest::SHA256.digest(to_bytes(false))).unpack('H*').first
         self
       end
 
-      def self.verify
+      def verify
         public_only_key = BTC::Key.new(public_key: [@sender_public_key].pack('H*'))
         public_only_key.verify_ecdsa_signature([@signature].pack('H*'), Digest::SHA256.digest(to_bytes))
       end
 
-      def self.second_verify(second_public_key)
+      def second_verify(second_public_key)
         public_only_key = BTC::Key.new(public_key: [second_public_key].pack('H*'))
         public_only_key.verify_ecdsa_signature([@sign_signature].pack('H*'), Digest::SHA256.digest(to_bytes(false)))
       end
 
-      def self.to_bytes(skip_signature = true, skip_second_signature = true)
+      def to_bytes(skip_signature = true, skip_second_signature = true)
         bytes = ''
         bytes << [@type].pack('c')
         bytes << [@timestamp].pack('V')
@@ -96,7 +96,7 @@ module ArkEcosystem
         bytes
       end
 
-      def self.parse_signatures(serialized, start_offset)
+      def parse_signatures(serialized, start_offset)
         signature = serialized[start_offset..-1]
 
         multi_signature_offset = 0

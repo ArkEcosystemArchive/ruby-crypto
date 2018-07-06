@@ -13,7 +13,7 @@ module ArkEcosystem
         def initialize
           @transaction = ArkEcosystem::Crypto::Transaction.new()
           @transaction.type = type
-          @transaction.fee = ArkEcosystem::Crypto::Configuration::Fee.get(@type)
+          @transaction.fee = ArkEcosystem::Crypto::Configuration::Fee.get(@transaction.type)
           @transaction.sender_public_key = nil
           @transaction.recipient_id = nil
           @transaction.amount = 0

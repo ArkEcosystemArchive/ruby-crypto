@@ -9,12 +9,12 @@ module ArkEcosystem
       # The builder for vote transactions.
       class Vote < Transaction
         def set_votes(votes)
-          @asset[:votes] = votes
+          @transaction.asset[:votes] = votes
           self
         end
 
         def sign(secret)
-          @recipient_id = ArkEcosystem::Crypto::Identity::Address.from_secret(secret)
+          @transaction.recipient_id = ArkEcosystem::Crypto::Identity::Address.from_secret(secret)
           sign_and_create_id(secret)
         end
 

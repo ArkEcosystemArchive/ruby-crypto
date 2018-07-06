@@ -14,7 +14,7 @@ module ArkEcosystem
         end
 
         def sign(secret)
-          @asset = {
+          @transaction.asset = {
             delegate: {
               username: @username,
               public_key: ArkEcosystem::Crypto::Identity::PublicKey.from_secret_as_hex(secret)

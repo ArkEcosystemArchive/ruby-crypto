@@ -1,4 +1,5 @@
 require 'arkecosystem/crypto/message'
+require 'arkecosystem/crypto/slot'
 require 'arkecosystem/crypto/transaction'
 
 require 'arkecosystem/crypto/builder/delegate_registration'

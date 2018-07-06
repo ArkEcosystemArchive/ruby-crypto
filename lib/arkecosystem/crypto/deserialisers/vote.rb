@@ -4,7 +4,7 @@ module ArkEcosystem
       # The deserialiser for vote transactions.
       class Vote < Base
         def deserialise
-          @transaction[:asset] = {
+          @transaction.asset = {
             votes: []
           }
 
@@ -18,7 +18,7 @@ module ArkEcosystem
             vote = @serialised[index_start, index_end]
             vote = (vote[1] == '1' ? '+' : '-') + vote[2..-1]
 
-            @transaction[:asset][:votes].push(vote)
+            @transaction.asset[:votes].push(vote)
 
             i += 1
           end

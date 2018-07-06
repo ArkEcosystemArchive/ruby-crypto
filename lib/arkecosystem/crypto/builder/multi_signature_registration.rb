@@ -10,28 +10,28 @@ module ArkEcosystem
         def initialize
           super
 
-          @asset = {
+          @transaction.asset = {
             multisignature: {}
           }
         end
 
         def set_keysgroup(keysgroup)
-          @asset[:multisignature][:keysgroup] = keysgroup
+          @transaction.asset[:multisignature][:keysgroup] = keysgroup
           self
         end
 
         def set_lifetime(lifetime)
-          @asset[:multisignature][:lifetime] = lifetime
+          @transaction.asset[:multisignature][:lifetime] = lifetime
           self
         end
 
         def set_min(min)
-          @asset[:multisignature][:min] = min
+          @transaction.asset[:multisignature][:min] = min
           self
         end
 
         def sign(secret)
-          @fee = (@asset[:multisignature][:keysgroup].size + 1) * ArkEcosystem::Crypto::Configuration::Fee.get(@type)
+          @fee = (@transaction.asset[:multisignature][:keysgroup].size + 1) * ArkEcosystem::Crypto::Configuration::Fee.get(@transaction.type)
           sign_and_create_id(secret)
         end
 
