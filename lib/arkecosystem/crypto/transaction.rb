@@ -131,7 +131,7 @@ module ArkEcosystem
             transaction.delete(:second_signature)
           else
             # Second Signature
-            second_signature_length = signature[2, 2].to_i(16) + 2
+            second_signature_length = transaction[:second_signature][2, 2].to_i(16) + 2
             transaction[:second_signature] = transaction[:second_signature][0, second_signature_length * 2]
 
             # Multi Signature
