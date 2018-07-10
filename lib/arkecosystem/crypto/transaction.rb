@@ -7,12 +7,12 @@ module ArkEcosystem
     class Transaction
       attr_accessor :amount, :asset, :fee, :id, :recipient_id, :sender_public_key, :sign_signature, :second_signature, :signature, :signatures, :timestamp, :type, :vendor_field, :vendor_field_hex, :version, :network, :expiration, :timelocktype, :timelock
 
-      def serialise(transaction)
-        ArkEcosystem::Crypto::Serialiser.new(transaction).serialise
+      def serialize(transaction)
+        ArkEcosystem::Crypto::Serialiser.new(transaction).serialize
       end
 
-      def deserialise(serialised)
-        ArkEcosystem::Crypto::Deserialiser.new(serialised).deserialise
+      def deserialize(serialized)
+        ArkEcosystem::Crypto::Deserializer.new(serialized).deserialize
       end
 
       def get_id

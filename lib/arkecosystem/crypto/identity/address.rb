@@ -23,7 +23,13 @@ module ArkEcosystem
 
           public_key = Digest::RMD160.digest(private_key.public_key)
 
-          BTC::Base58.base58check_from_data([network.version.to_i(16)].pack('c') + public_key)
+          version = if network.is_a? Integer
+                      network
+                    else
+                      network.version.to_i(16)
+                    end
+
+          BTC::Base58.base58check_from_data([version].pack('c') + public_key)
         end
 
         def self.validate(address)
