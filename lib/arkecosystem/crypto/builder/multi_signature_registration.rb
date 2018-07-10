@@ -16,6 +16,8 @@ module ArkEcosystem
         end
 
         def set_keysgroup(keysgroup)
+          @fee = (keysgroup.size + 1) * ArkEcosystem::Crypto::Configuration::Fee.get(@transaction.type)
+
           @transaction.asset[:multisignature][:keysgroup] = keysgroup
           self
         end
@@ -28,11 +30,6 @@ module ArkEcosystem
         def set_min(min)
           @transaction.asset[:multisignature][:min] = min
           self
-        end
-
-        def sign(secret)
-          @fee = (@transaction.asset[:multisignature][:keysgroup].size + 1) * ArkEcosystem::Crypto::Configuration::Fee.get(@transaction.type)
-          sign_and_create_id(secret)
         end
 
         def type

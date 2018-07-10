@@ -8,10 +8,10 @@ module ArkEcosystem
     module Builder
       # The builder for second signature registration transactions.
       class SecondSignatureRegistration < Transaction
-        def set_second_secret(second_secret)
+        def set_second_passphrase(second_passphrase)
           @transaction.asset = {
             signature: {
-              public_key: ArkEcosystem::Crypto::Identity::PublicKey.from_secret_as_hex(second_secret)
+              public_key: ArkEcosystem::Crypto::Identity::PublicKey.from_passphrase_as_hex(second_passphrase)
             }
           }
           self

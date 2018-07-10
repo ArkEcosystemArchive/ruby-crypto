@@ -5,13 +5,13 @@ module ArkEcosystem
     module Identity
       # The identity utility for a WIF.
       class WIF
-        def self.from_secret(secret, network = nil)
+        def self.from_passphrase(passphrase, network = nil)
           network ||= ArkEcosystem::Crypto::Configuration::Network.get
 
-          secret = Digest::SHA256.digest(secret)
+          passphrase = Digest::SHA256.digest(passphrase)
 
           seed = [network.wif].pack('C*')
-          seed << secret
+          seed << passphrase
           seed << [0x01].pack('C*')
 
           BTC::Base58.base58check_from_data(seed)

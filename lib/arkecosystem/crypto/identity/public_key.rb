@@ -5,12 +5,12 @@ module ArkEcosystem
     module Identity
       # The identity utility for a public key.
       class PublicKey
-        def self.from_secret(secret)
-          PrivateKey.from_secret(secret).public_key
+        def self.from_passphrase(passphrase)
+          PrivateKey.from_passphrase(passphrase).public_key
         end
 
-        def self.from_secret_as_hex(secret)
-          from_secret(secret).unpack('H*').first
+        def self.from_passphrase_as_hex(passphrase)
+          from_passphrase(passphrase).unpack('H*').first
         end
       end
     end

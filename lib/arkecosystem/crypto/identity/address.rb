@@ -6,8 +6,8 @@ module ArkEcosystem
     module Identity
       # The identity utility for an address.
       class Address
-        def self.from_secret(secret, network = nil)
-          private_key = PrivateKey.from_secret(secret)
+        def self.from_passphrase(passphrase, network = nil)
+          private_key = PrivateKey.from_passphrase(passphrase)
 
           from_private_key(private_key, network)
         end
@@ -24,10 +24,10 @@ module ArkEcosystem
           public_key = Digest::RMD160.digest(private_key.public_key)
 
           version = if network.is_a? Integer
-                      network
-                    else
-                      network.version.to_i(16)
-                    end
+            network
+          else
+            network.version.to_i(16)
+          end
 
           BTC::Base58.base58check_from_data([version].pack('c') + public_key)
         end

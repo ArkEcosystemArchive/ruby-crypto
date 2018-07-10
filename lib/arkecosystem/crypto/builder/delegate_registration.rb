@@ -13,14 +13,14 @@ module ArkEcosystem
           self
         end
 
-        def sign(secret)
+        def sign(passphrase)
           @transaction.asset = {
             delegate: {
               username: @username,
-              public_key: ArkEcosystem::Crypto::Identity::PublicKey.from_secret_as_hex(secret)
+              public_key: ArkEcosystem::Crypto::Identity::PublicKey.from_passphrase_as_hex(passphrase)
             }
           }
-          sign_and_create_id(secret)
+          sign_and_create_id(passphrase)
         end
 
         def type

@@ -22,18 +22,18 @@ module ArkEcosystem
           @transaction.asset = {}
         end
 
-        def sign(secret)
-          sign_and_create_id(secret)
+        def sign(passphrase)
+          sign_and_create_id(passphrase)
         end
 
-        def sign_and_create_id(secret)
-          @transaction.sign(secret)
+        def sign_and_create_id(passphrase)
+          @transaction.sign(passphrase)
           @transaction.id = @transaction.get_id
           self
         end
 
-        def second_sign(second_secret)
-          @transaction.second_sign(second_secret)
+        def second_sign(second_passphrase)
+          @transaction.second_sign(second_passphrase)
           self
         end
 

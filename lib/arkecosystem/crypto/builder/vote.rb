@@ -13,9 +13,9 @@ module ArkEcosystem
           self
         end
 
-        def sign(secret)
-          @transaction.recipient_id = ArkEcosystem::Crypto::Identity::Address.from_secret(secret)
-          sign_and_create_id(secret)
+        def sign(passphrase)
+          @transaction.recipient_id = ArkEcosystem::Crypto::Identity::Address.from_passphrase(passphrase)
+          sign_and_create_id(passphrase)
         end
 
         def type
