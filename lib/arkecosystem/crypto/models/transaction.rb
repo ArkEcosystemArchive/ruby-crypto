@@ -3,12 +3,12 @@ module ArkEcosystem
     module Models
       # The model of a transaction.
       class Transaction
-        def serialise(transaction)
-          ArkEcosystem::Crypto::Serialiser.new(transaction).serialise
+        def serialize(transaction)
+          ArkEcosystem::Crypto::Serializer.new(transaction).serialize
         end
 
-        def deserialise(serialised)
-          ArkEcosystem::Crypto::Deserialiser.new(serialised).deserialise
+        def deserialize(serialized)
+          ArkEcosystem::Crypto::Deserializer.new(serialized).deserialize
         end
       end
     end
