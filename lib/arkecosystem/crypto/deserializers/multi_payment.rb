@@ -4,7 +4,7 @@ module ArkEcosystem
       # The deserializer for multi payment transactions.
       class MultiPayment < Base
         def deserialize
-          @transaction[:asset] = {
+          @transaction.asset = {
             amount: 0,
             payments: []
           }
@@ -21,16 +21,16 @@ module ArkEcosystem
               recipient_id: BTC::Base58.base58check_from_data([recipient_id].pack('H*'))
             }
 
-            @transaction[:asset][:payments].push(payment)
+            @transaction.asset[:payments].push(payment)
 
             offset += 22
 
             i += 1
           end
 
-          products.each { |item| @transaction[:amount] += item[:amount] }
+          products.each { |item| @transaction.amount += item[:amount] }
 
-          ArkEcosystem::Crypto::Crypto.parse_signatures(@serialized, @transaction, offset * 2)
+          @transaction.parse_signatures(@serialized, offset * 2)
         end
       end
     end

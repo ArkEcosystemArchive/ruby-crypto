@@ -1,5 +1,3 @@
-require 'arkecosystem/crypto/crypto'
-
 module ArkEcosystem
   module Crypto
     # The builder to work with signed messages.

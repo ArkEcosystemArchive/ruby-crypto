@@ -4,7 +4,7 @@ module ArkEcosystem
       # The deserializer for delegate resignation transactions.
       class DelegateResignation < Base
         def deserialize
-          ArkEcosystem::Crypto::Crypto.parse_signatures(@serialized, @transaction, @asset_offset)
+          @transaction.parse_signatures(@serialized, @asset_offset)
         end
       end
     end

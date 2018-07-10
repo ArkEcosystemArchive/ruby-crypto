@@ -1,5 +1,6 @@
-require 'arkecosystem/crypto/crypto'
 require 'arkecosystem/crypto/message'
+require 'arkecosystem/crypto/slot'
+require 'arkecosystem/crypto/transaction'
 
 require 'arkecosystem/crypto/builder/delegate_registration'
 require 'arkecosystem/crypto/builder/multi_signature_registration'
@@ -17,8 +18,6 @@ require 'arkecosystem/crypto/identity/address'
 require 'arkecosystem/crypto/identity/private_key'
 require 'arkecosystem/crypto/identity/public_key'
 require 'arkecosystem/crypto/identity/wif'
-
-require 'arkecosystem/crypto/models/transaction'
 
 require 'arkecosystem/crypto/networks/devnet'
 require 'arkecosystem/crypto/networks/mainnet'

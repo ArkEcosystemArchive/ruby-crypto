@@ -4,7 +4,7 @@ module ArkEcosystem
       # The deserializer for vote transactions.
       class Vote < Base
         def deserialize
-          @transaction[:asset] = {
+          @transaction.asset = {
             votes: []
           }
 
@@ -18,12 +18,12 @@ module ArkEcosystem
             vote = @serialized[index_start, index_end]
             vote = (vote[1] == '1' ? '+' : '-') + vote[2..-1]
 
-            @transaction[:asset][:votes].push(vote)
+            @transaction.asset[:votes].push(vote)
 
             i += 1
           end
 
-          ArkEcosystem::Crypto::Crypto.parse_signatures(@serialized, @transaction, @asset_offset + 2 + vote_length * 34 * 2)
+          @transaction.parse_signatures(@serialized, @asset_offset + 2 + vote_length * 34 * 2)
         end
       end
     end

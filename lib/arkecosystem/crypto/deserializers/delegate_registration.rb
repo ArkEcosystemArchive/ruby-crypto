@@ -4,7 +4,7 @@ module ArkEcosystem
       # The deserializer for delegate registration transactions.
       class DelegateRegistration < Base
         def deserialize
-          @transaction[:asset] = {
+          @transaction.asset = {
             delegate: {}
           }
 
@@ -12,9 +12,9 @@ module ArkEcosystem
 
           username = @serialized[@asset_offset + 2, username_length * 2]
 
-          @transaction[:asset][:delegate][:username] = BTC::Data.data_from_hex(username)
+          @transaction.asset[:delegate][:username] = BTC::Data.data_from_hex(username)
 
-          ArkEcosystem::Crypto::Crypto.parse_signatures(@serialized, @transaction, @asset_offset + (username_length + 1) * 2)
+          @transaction.parse_signatures(@serialized, @asset_offset + (username_length + 1) * 2)
         end
       end
     end

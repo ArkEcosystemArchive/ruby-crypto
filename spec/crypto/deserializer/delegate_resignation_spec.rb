@@ -9,7 +9,7 @@ describe ArkEcosystem::Crypto::Deserializers::DelegateResignation do
 
       actual = ArkEcosystem::Crypto::Deserializer.new(transaction['serialized']).deserialize
 
-      expect(actual[:id]).to eq(transaction[:id])
+      expect(actual.id).to eq(transaction[:id])
     end
   end
 end
