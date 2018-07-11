@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Brian Faust']
   spec.email         = ['brian@ark.io']
 
-  spec.summary       = 'A simple Ruby Cryptography Implementation for the ARK Blockchain.'
-  spec.description   = 'A simple Ruby Cryptography Implementation for the ARK Blockchain.'
+  spec.summary       = 'A simple Ruby Cryptography Implementation for the Ark Blockchain.'
+  spec.description   = 'A simple Ruby Cryptography Implementation for the Ark Blockchain.'
   spec.homepage      = 'https://github.com/ArkEcosystem/ruby-crypto'
   spec.license       = 'MIT'
 

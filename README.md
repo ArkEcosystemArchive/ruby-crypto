@@ -1,10 +1,10 @@
-# ARK Ruby - Crypto
+# Ark Ruby - Crypto
 
 <p align="center">
     <img src="https://github.com/ArkEcosystem/ruby-crypto/blob/master/banner.png" />
 </p>
 
-> A simple Ruby Cryptography Implementation for the ARK Blockchain.
+> A simple Ruby Cryptography Implementation for the Ark Blockchain.
 
 [![Build Status](https://travis-ci.org/ArkEcosystem/ruby-crypto.svg?branch=develop)](https://travis-ci.org/ArkEcosystem/ruby-crypto)
 [![Latest Version](https://img.shields.io/github/release/ArkEcosystem/ruby-crypto.svg?style=flat-square)](https://github.com/ArkEcosystem/ruby-crypto/releases)
