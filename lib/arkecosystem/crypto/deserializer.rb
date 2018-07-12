@@ -65,18 +65,11 @@ module ArkEcosystem
           transaction.sign_signature = transaction.second_signature
         end
 
-        if transaction.type == ArkEcosystem::Crypto::Enums::Types::SECOND_SIGNATURE_REGISTRATION
-          # The "recipientId" doesn't exist on v1 second signature registrations
-          # transaction.recipient_id = ArkEcosystem::Crypto::Identity::Address.from_public_key(transaction.sender_public_key, transaction.network)
-        end
-
         if transaction.type == ArkEcosystem::Crypto::Enums::Types::VOTE
           transaction.recipient_id = ArkEcosystem::Crypto::Identity::Address.from_public_key(transaction.sender_public_key, transaction.network)
         end
 
         if transaction.type == ArkEcosystem::Crypto::Enums::Types::MULTI_SIGNATURE_REGISTRATION
-          # The "recipientId" doesn't exist on v1 multi signature registrations
-          # transaction.recipient_id = ArkEcosystem::Crypto::Identity::Address::from_public_key(transaction.sender_public_key, transaction.network);
           transaction.asset[:multisignature][:keysgroup] = transaction.asset[:multisignature][:keysgroup].map! { |key| '+' + key }
         end
 
@@ -86,6 +79,14 @@ module ArkEcosystem
 
         unless transaction.id
           transaction.id = transaction.get_id
+        end
+
+        if transaction.type == ArkEcosystem::Crypto::Enums::Types::SECOND_SIGNATURE_REGISTRATION
+          transaction.recipient_id = ArkEcosystem::Crypto::Identity::Address.from_public_key(transaction.sender_public_key, transaction.network)
+        end
+
+        if transaction.type == ArkEcosystem::Crypto::Enums::Types::MULTI_SIGNATURE_REGISTRATION
+          transaction.recipient_id = ArkEcosystem::Crypto::Identity::Address::from_public_key(transaction.sender_public_key, transaction.network);
         end
 
         transaction
