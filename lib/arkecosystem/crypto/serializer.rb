@@ -22,7 +22,7 @@ module ArkEcosystem
         bytes = ''
         bytes << [0xff].pack('C')
         bytes << [@transaction[:version] || 0x01].pack('C')
-        bytes << [@transaction[:network]].pack('C')
+        bytes << [@transaction[:network] || ArkEcosystem::Crypto::Configuration::Network.get.version.to_i(16)].pack('C')
         bytes << [@transaction[:type]].pack('C')
         bytes << [@transaction[:timestamp]].pack('V')
         bytes << [@transaction[:senderPublicKey]].pack('H*')

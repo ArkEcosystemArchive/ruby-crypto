@@ -2,14 +2,13 @@ require 'spec_helper'
 
 describe ArkEcosystem::Crypto::Deserializers::DelegateResignation do
   describe '#deserialize' do
-    skip it 'should be ok' do
-      transaction = JSON.parse!(File.read('spec/fixtures/transactions/delegate_resignation.json'), object_class: OpenStruct)
-
-      ArkEcosystem::Crypto::Configuration::Network.set(ArkEcosystem::Crypto::Networks::Devnet)
+    skip 'should be ok if signed with a passphrase' do
+      transaction = JSON.parse!(File.read('spec/fixtures/transactions/type-8/passphrase.json'), object_class: OpenStruct)
 
       actual = ArkEcosystem::Crypto::Deserializer.new(transaction['serialized']).deserialize
 
-      expect(actual.id).to eq(transaction[:id])
+      expect(actual.version).to eq(1)
+      expect(actual.network).to eq(30)
     end
   end
 end
