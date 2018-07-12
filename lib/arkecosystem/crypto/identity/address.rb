@@ -26,7 +26,7 @@ module ArkEcosystem
           version = if network.is_a? Integer
             network
           else
-            network.version.to_i(16)
+            network.version
           end
 
           BTC::Base58.base58check_from_data([version].pack('c') + public_key)

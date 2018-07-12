@@ -8,7 +8,7 @@ module ArkEcosystem
         end
 
         def self.version
-          '17'
+          0x17
         end
 
         def self.nethash
