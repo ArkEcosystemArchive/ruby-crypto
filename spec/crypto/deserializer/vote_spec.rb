@@ -1,9 +1,7 @@
-require 'spec_helper'
-
 describe ArkEcosystem::Crypto::Deserializers::Vote do
   describe '#deserialize' do
     it 'should be ok if signed with a passphrase' do
-      transaction = JSON.parse!(File.read('spec/fixtures/transactions/type-3/passphrase.json'), object_class: OpenStruct)
+      transaction = JSON.parse!(File.read('spec/fixtures/transactions/vote/passphrase.json'), object_class: OpenStruct)
 
       actual = ArkEcosystem::Crypto::Deserializer.new(transaction['serialized']).deserialize
 
@@ -21,7 +19,7 @@ describe ArkEcosystem::Crypto::Deserializers::Vote do
     end
 
     it 'should be ok if signed with a second passphrase' do
-      transaction = JSON.parse!(File.read('spec/fixtures/transactions/type-3/second-passphrase.json'), object_class: OpenStruct)
+      transaction = JSON.parse!(File.read('spec/fixtures/transactions/vote/second-passphrase.json'), object_class: OpenStruct)
 
       actual = ArkEcosystem::Crypto::Deserializer.new(transaction['serialized']).deserialize
 

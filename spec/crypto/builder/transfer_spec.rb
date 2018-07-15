@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe ArkEcosystem::Crypto::Builder::Transfer do
   let(:amount) { 133_380_000_000 }
   let(:recipient_id) { 'AXoXnFi4z1Z6aFvjEYkDVCtBGW2PaRiM25' }

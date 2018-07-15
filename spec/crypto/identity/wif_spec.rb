@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe ArkEcosystem::Crypto::Identity::WIF do
   let(:network) { ArkEcosystem::Crypto::Networks::Devnet }
 

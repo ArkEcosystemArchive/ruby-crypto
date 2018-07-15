@@ -8,7 +8,7 @@ module ArkEcosystem
       attr_accessor :amount, :asset, :fee, :id, :recipient_id, :sender_public_key, :sign_signature, :second_signature, :signature, :signatures, :timestamp, :type, :vendor_field, :vendor_field_hex, :version, :network, :expiration, :timelocktype, :timelock
 
       def initialize
-        asset = {}
+        @asset = {}
       end
 
       def serialize(transaction)

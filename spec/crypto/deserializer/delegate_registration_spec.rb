@@ -1,9 +1,7 @@
-require 'spec_helper'
-
 describe ArkEcosystem::Crypto::Deserializers::DelegateRegistration do
   describe '#deserialize' do
     it 'should be ok if signed with a passphrase' do
-      transaction = JSON.parse!(File.read('spec/fixtures/transactions/type-2/passphrase.json'), object_class: OpenStruct)
+      transaction = JSON.parse!(File.read('spec/fixtures/transactions/delegate_registration/passphrase.json'), object_class: OpenStruct)
 
       actual = ArkEcosystem::Crypto::Deserializer.new(transaction['serialized']).deserialize
 
@@ -20,7 +18,7 @@ describe ArkEcosystem::Crypto::Deserializers::DelegateRegistration do
     end
 
     it 'should be ok if signed with a second passphrase' do
-      transaction = JSON.parse!(File.read('spec/fixtures/transactions/type-2/second-passphrase.json'), object_class: OpenStruct)
+      transaction = JSON.parse!(File.read('spec/fixtures/transactions/delegate_registration/second-passphrase.json'), object_class: OpenStruct)
 
       actual = ArkEcosystem::Crypto::Deserializer.new(transaction['serialized']).deserialize
 

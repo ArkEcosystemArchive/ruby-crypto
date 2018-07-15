@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe ArkEcosystem::Crypto::Identity::PrivateKey do
   describe '#from_passphrase' do
     it 'should be ok' do

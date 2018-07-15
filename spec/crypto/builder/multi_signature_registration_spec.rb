@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe ArkEcosystem::Crypto::Builder::MultiSignatureRegistration do
   let(:keysgroup) do
     %w[

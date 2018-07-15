@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe ArkEcosystem::Crypto::Builder::SecondSignatureRegistration do
   let(:passphrase) { 'this is a top secret passphrase' }
   let(:second_passphrase) { 'this is a top secret second passphrase' }
