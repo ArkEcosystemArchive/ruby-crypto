@@ -18,7 +18,7 @@ module ArkEcosystem
             @transaction.asset = {
               delegate: {
                 username: @username,
-                public_key: ArkEcosystem::Crypto::Identity::PublicKey.from_hex(passphrase)
+                public_key: ArkEcosystem::Crypto::Identity::PublicKey.from_passphrase(passphrase)
               }
             }
             sign_and_create_id(passphrase)

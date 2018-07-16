@@ -10,7 +10,7 @@ module ArkEcosystem
         end
 
         def self.from_hex(public_key)
-          BTC::Key.new(public_key: BTC::Data.data_from_hex(public_key))
+          BTC::Key.new(public_key: BTC.from_hex(public_key))
         end
       end
     end

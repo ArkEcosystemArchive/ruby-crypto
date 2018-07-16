@@ -12,7 +12,7 @@ module ArkEcosystem
           def set_second_passphrase(second_passphrase)
             @transaction.asset = {
               signature: {
-                public_key: ArkEcosystem::Crypto::Identity::PublicKey.from_hex(second_passphrase)
+                public_key: ArkEcosystem::Crypto::Identity::PublicKey.from_passphrase(second_passphrase)
               }
             }
             self
