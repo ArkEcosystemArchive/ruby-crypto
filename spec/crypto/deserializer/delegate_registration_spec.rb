@@ -29,6 +29,7 @@ describe ArkEcosystem::Crypto::Deserializers::DelegateRegistration do
       expect(actual.sender_public_key).to eq(transaction.data.senderPublicKey)
       expect(actual.fee).to eq(transaction.data.fee)
       expect(actual.signature).to eq(transaction.data.signature)
+      expect(actual.sign_signature).to eq(transaction.data.signSignature)
       expect(actual.amount).to eq(transaction.data.amount)
       expect(actual.id).to eq(transaction.data.id)
       expect(actual.asset[:delegate][:username]).to eq(transaction.data.asset.delegate.username)
