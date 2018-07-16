@@ -18,14 +18,14 @@ module ArkEcosystem
         end
 
         def sign(passphrase)
-          private_key = ArkEcosystem::Crypto::Identity::PrivateKey.from_passphrase(passphrase)
+          private_key = ArkEcosystem::Crypto::Identities::PrivateKey.from_passphrase(passphrase)
           @sender_public_key = private_key.public_key.unpack('H*').first
           @signature = private_key.ecdsa_signature(Digest::SHA256.digest(to_bytes)).unpack('H*').first
           self
         end
 
         def second_sign(second_passphrase)
-          second_key = ArkEcosystem::Crypto::Identity::PrivateKey.from_passphrase(second_passphrase)
+          second_key = ArkEcosystem::Crypto::Identities::PrivateKey.from_passphrase(second_passphrase)
 
           @sign_signature = second_key.ecdsa_signature(Digest::SHA256.digest(to_bytes(false))).unpack('H*').first
           self

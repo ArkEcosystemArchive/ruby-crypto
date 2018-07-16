@@ -1,4 +1,4 @@
-describe ArkEcosystem::Crypto::Identity::PrivateKey do
+describe ArkEcosystem::Crypto::Identities::PrivateKey do
   describe '#from_passphrase' do
     it 'should be ok' do
       identity = JSON.parse!(File.read('spec/fixtures/identity.json'), object_class: OpenStruct)

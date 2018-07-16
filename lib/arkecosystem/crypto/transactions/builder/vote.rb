@@ -1,6 +1,6 @@
 require 'arkecosystem/crypto/enums/fees'
 require 'arkecosystem/crypto/enums/types'
-require 'arkecosystem/crypto/identity/address'
+require 'arkecosystem/crypto/identities/address'
 require 'arkecosystem/crypto/transactions/builder/base'
 
 module ArkEcosystem
@@ -15,7 +15,7 @@ module ArkEcosystem
           end
 
           def sign(passphrase)
-            @transaction.recipient_id = ArkEcosystem::Crypto::Identity::Address.from_passphrase(passphrase)
+            @transaction.recipient_id = ArkEcosystem::Crypto::Identities::Address.from_passphrase(passphrase)
             sign_and_create_id(passphrase)
           end
 

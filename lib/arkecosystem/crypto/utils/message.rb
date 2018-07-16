@@ -10,7 +10,7 @@ module ArkEcosystem
         end
 
         def self.sign(message, passphrase)
-          key = ArkEcosystem::Crypto::Identity::PrivateKey.from_passphrase(passphrase)
+          key = ArkEcosystem::Crypto::Identities::PrivateKey.from_passphrase(passphrase)
 
           hash = Digest::SHA256.digest(message)
 

@@ -1,5 +1,5 @@
 require 'time'
-require 'arkecosystem/crypto/identity/private_key'
+require 'arkecosystem/crypto/identities/private_key'
 require 'arkecosystem/crypto/configuration/fee'
 require 'arkecosystem/crypto/configuration/network'
 require 'btcruby/base58'

@@ -2,7 +2,7 @@ require 'btcruby'
 
 module ArkEcosystem
   module Crypto
-    module Identity
+    module Identities
       # The identity utility for a public key.
       class PublicKey
         def self.from_passphrase(passphrase)

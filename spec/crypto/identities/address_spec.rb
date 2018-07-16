@@ -1,4 +1,4 @@
-describe ArkEcosystem::Crypto::Identity::Address do
+describe ArkEcosystem::Crypto::Identities::Address do
   let(:network) { ArkEcosystem::Crypto::Networks::Devnet }
 
   describe '#from_passphrase' do
@@ -25,7 +25,7 @@ describe ArkEcosystem::Crypto::Identity::Address do
     it 'should be ok' do
       identity = JSON.parse!(File.read('spec/fixtures/identity.json'), object_class: OpenStruct)
 
-      private_key = ArkEcosystem::Crypto::Identity::PrivateKey.from_passphrase(identity.passphrase)
+      private_key = ArkEcosystem::Crypto::Identities::PrivateKey.from_passphrase(identity.passphrase)
 
       actual = described_class.from_private_key(private_key, network)
 

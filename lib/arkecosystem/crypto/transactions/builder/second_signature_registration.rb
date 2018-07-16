@@ -1,6 +1,6 @@
 require 'arkecosystem/crypto/enums/fees'
 require 'arkecosystem/crypto/enums/types'
-require 'arkecosystem/crypto/identity/public_key'
+require 'arkecosystem/crypto/identities/public_key'
 require 'arkecosystem/crypto/transactions/builder/base'
 
 module ArkEcosystem
@@ -12,7 +12,7 @@ module ArkEcosystem
           def set_second_passphrase(second_passphrase)
             @transaction.asset = {
               signature: {
-                public_key: ArkEcosystem::Crypto::Identity::PublicKey.from_passphrase(second_passphrase)
+                public_key: ArkEcosystem::Crypto::Identities::PublicKey.from_passphrase(second_passphrase)
               }
             }
             self

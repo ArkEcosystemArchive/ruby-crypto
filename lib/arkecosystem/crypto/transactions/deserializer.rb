@@ -1,4 +1,4 @@
-require 'arkecosystem/crypto/identity/address'
+require 'arkecosystem/crypto/identities/address'
 
 module ArkEcosystem
   module Crypto
@@ -67,7 +67,7 @@ module ArkEcosystem
           end
 
           if transaction.type == ArkEcosystem::Crypto::Enums::Types::VOTE
-            transaction.recipient_id = ArkEcosystem::Crypto::Identity::Address.from_public_key(transaction.sender_public_key, transaction.network)
+            transaction.recipient_id = ArkEcosystem::Crypto::Identities::Address.from_public_key(transaction.sender_public_key, transaction.network)
           end
 
           if transaction.type == ArkEcosystem::Crypto::Enums::Types::MULTI_SIGNATURE_REGISTRATION
@@ -83,11 +83,11 @@ module ArkEcosystem
           end
 
           if transaction.type == ArkEcosystem::Crypto::Enums::Types::SECOND_SIGNATURE_REGISTRATION
-            transaction.recipient_id = ArkEcosystem::Crypto::Identity::Address.from_public_key(transaction.sender_public_key, transaction.network)
+            transaction.recipient_id = ArkEcosystem::Crypto::Identities::Address.from_public_key(transaction.sender_public_key, transaction.network)
           end
 
           if transaction.type == ArkEcosystem::Crypto::Enums::Types::MULTI_SIGNATURE_REGISTRATION
-            transaction.recipient_id = ArkEcosystem::Crypto::Identity::Address::from_public_key(transaction.sender_public_key, transaction.network);
+            transaction.recipient_id = ArkEcosystem::Crypto::Identities::Address::from_public_key(transaction.sender_public_key, transaction.network);
           end
 
           transaction

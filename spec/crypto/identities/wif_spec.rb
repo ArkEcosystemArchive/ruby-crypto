@@ -1,4 +1,4 @@
-describe ArkEcosystem::Crypto::Identity::WIF do
+describe ArkEcosystem::Crypto::Identities::WIF do
   let(:network) { ArkEcosystem::Crypto::Networks::Devnet }
 
   describe '#from_passphrase' do

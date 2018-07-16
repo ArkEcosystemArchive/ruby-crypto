@@ -1,6 +1,6 @@
 require 'arkecosystem/crypto/enums/fees'
 require 'arkecosystem/crypto/enums/types'
-require 'arkecosystem/crypto/identity/public_key'
+require 'arkecosystem/crypto/identities/public_key'
 require 'arkecosystem/crypto/transactions/builder/base'
 
 module ArkEcosystem
@@ -18,7 +18,7 @@ module ArkEcosystem
             @transaction.asset = {
               delegate: {
                 username: @username,
-                public_key: ArkEcosystem::Crypto::Identity::PublicKey.from_passphrase(passphrase)
+                public_key: ArkEcosystem::Crypto::Identities::PublicKey.from_passphrase(passphrase)
               }
             }
             sign_and_create_id(passphrase)

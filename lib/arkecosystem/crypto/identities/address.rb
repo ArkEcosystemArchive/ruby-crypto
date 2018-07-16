@@ -3,7 +3,7 @@ require 'arkecosystem/crypto/configuration/network'
 
 module ArkEcosystem
   module Crypto
-    module Identity
+    module Identities
       # The identity utility for an address.
       class Address
         def self.from_passphrase(passphrase, network = nil)

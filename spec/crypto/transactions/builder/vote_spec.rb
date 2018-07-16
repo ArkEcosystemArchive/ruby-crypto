@@ -21,7 +21,7 @@ describe ArkEcosystem::Crypto::Transactions::Builder::Vote do
     .sign(passphrase)
     .second_sign(second_passphrase)
 
-    second_public_key = ArkEcosystem::Crypto::Identity::PublicKey.from_passphrase(second_passphrase)
+    second_public_key = ArkEcosystem::Crypto::Identities::PublicKey.from_passphrase(second_passphrase)
 
     expect(transaction.verify).to be_truthy
     expect(transaction.second_verify(BTC.to_hex(second_public_key))).to be_truthy
