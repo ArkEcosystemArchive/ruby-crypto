@@ -9,8 +9,8 @@ module ArkEcosystem
           PrivateKey.from_passphrase(passphrase).public_key
         end
 
-        def self.from_hex(passphrase)
-          from_passphrase(passphrase).unpack('H*').first
+        def self.from_hex(public_key)
+          BTC::Key.new(public_key: BTC::Data.data_from_hex(public_key))
         end
       end
     end
