@@ -55,11 +55,11 @@
 - [x] verify
 - [x] secondVerify
 - [x] parseSignatures
-- [ ] serialize
-- [ ] deserialize
+- [x] serialize
+- [x] deserialize
 - [x] toBytes
 - [x] toParams
-- [ ] toJson
+- [x] toJson
 
 ### Message
 - [x] sign
@@ -87,8 +87,8 @@
 ### Configuration
 - [x] getNetwork
 - [x] setNetwork
-- [ ] getFee
-- [ ] setFee
+- [x] getFee
+- [x] setFee
 
 ### Slot
 - [x] time

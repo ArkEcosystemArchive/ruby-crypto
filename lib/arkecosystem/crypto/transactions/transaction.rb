@@ -1,3 +1,4 @@
+require 'json'
 require 'btcruby'
 require 'arkecosystem/crypto/enums/types'
 
@@ -10,14 +11,6 @@ module ArkEcosystem
 
         def initialize
           @asset = {}
-        end
-
-        def serialize(transaction)
-          ArkEcosystem::Crypto::Serialiser.new(transaction).serialize
-        end
-
-        def deserialize(serialized)
-          ArkEcosystem::Crypto::Transactions::Deserializer.new(serialized).deserialize
         end
 
         def get_id
@@ -163,6 +156,14 @@ module ArkEcosystem
           end
         end
 
+        def serialize(transaction)
+          ArkEcosystem::Crypto::Serialiser.new(transaction).serialize
+        end
+
+        def deserialize(serialized)
+          ArkEcosystem::Crypto::Transactions::Deserializer.new(serialized).deserialize
+        end
+
         def to_params
           {
             type: type,
@@ -178,6 +179,10 @@ module ArkEcosystem
             h[:asset] = asset.deep_transform_keys { |key| snake_case_to_camel_case(key) } if asset.any?
             h[:signSignature] = sign_signature if sign_signature
           end
+        end
+
+        def to_json
+          to_params.to_json
         end
 
         private
