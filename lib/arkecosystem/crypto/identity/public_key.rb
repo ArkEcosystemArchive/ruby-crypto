@@ -9,7 +9,7 @@ module ArkEcosystem
           PrivateKey.from_passphrase(passphrase).public_key
         end
 
-        def self.from_passphrase_as_hex(passphrase)
+        def self.from_hex(passphrase)
           from_passphrase(passphrase).unpack('H*').first
         end
       end

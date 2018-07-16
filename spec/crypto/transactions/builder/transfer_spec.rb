@@ -27,7 +27,7 @@ describe ArkEcosystem::Crypto::Transactions::Builder::Transfer do
     .sign(passphrase)
     .second_sign(second_passphrase)
 
-    second_public_key_address = ArkEcosystem::Crypto::Identity::PublicKey.from_passphrase_as_hex(second_passphrase)
+    second_public_key_address = ArkEcosystem::Crypto::Identity::PublicKey.from_hex(second_passphrase)
 
     expect(transaction.verify).to be_truthy
     expect(transaction.second_verify(second_public_key_address)).to be_truthy
