@@ -30,6 +30,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 1.15'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'codecov', '~> 0.1.4'
+  spec.add_development_dependency 'simplecov', '~> 0.16.1'
 
   spec.add_dependency 'btcruby'
   spec.add_dependency 'deep_hash_transform'
