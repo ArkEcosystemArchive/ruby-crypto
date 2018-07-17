@@ -1,7 +1,12 @@
-require 'bundler/setup'
-require 'ostruct'
-require 'btcruby'
 require 'arkecosystem/crypto'
+require 'btcruby'
+require 'bundler/setup'
+require 'codecov'
+require 'ostruct'
+require 'simplecov'
+
+SimpleCov.start
+SimpleCov.formatter = SimpleCov::Formatter::Codecov
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

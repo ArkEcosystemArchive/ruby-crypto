@@ -8,3 +8,7 @@ group :development do
   gem 'guard-rspec', require: false
   gem 'rubocop', '~> 0.56.0', require: false
 end
+
+group :test do
+  gem 'codecov', :require => false
+end
