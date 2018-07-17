@@ -1,6 +1,6 @@
 if ENV['CI'] == 'true'
-  require 'codecov'
   require 'simplecov'
+  require 'codecov'
 
   SimpleCov.start
   SimpleCov.formatter = SimpleCov::Formatter::Codecov
