@@ -30,7 +30,7 @@ Or install it yourself as:
 
 ## Documentation
 
-Have a look at the [official documentation](https://docs.ark.io/v1.0/docs/cryptography-ruby) for advanced examples and features.
+You can find installation instructions and detailed instructions on how to use this package at the [dedicated documentation site](https://docs.ark.io/v1.0/docs/cryptography-ruby).
 
 ## Development
 
