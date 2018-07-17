@@ -1,8 +1,10 @@
-require 'codecov'
-SimpleCov.start
+if ENV['CI'] == 'true'
+  require 'codecov'
+  require 'simplecov'
 
-require 'simplecov'
-SimpleCov.formatter = SimpleCov::Formatter::Codecov
+  SimpleCov.start
+  SimpleCov.formatter = SimpleCov::Formatter::Codecov
+end
 
 require 'arkecosystem/crypto'
 require 'btcruby'
