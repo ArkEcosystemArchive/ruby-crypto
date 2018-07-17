@@ -6,8 +6,9 @@
 
 > A simple Ruby Cryptography Implementation for the Ark Blockchain.
 
-[![Build Status](https://travis-ci.org/ArkEcosystem/ruby-crypto.svg?branch=develop)](https://travis-ci.org/ArkEcosystem/ruby-crypto)
-[![Latest Version](https://img.shields.io/github/release/ArkEcosystem/ruby-crypto.svg?style=flat-square)](https://github.com/ArkEcosystem/ruby-crypto/releases)
+[![Build Status](https://travis-ci.org/ArkEcosystem/ruby-crypto.svg)](https://travis-ci.org/ArkEcosystem/ruby-crypto)
+[![Codecov](https://codecov.io/gh/arkecosystem/ruby-crypto)](https://img.shields.io/codecov/c/github/arkecosystem/ruby-crypto.svg)
+[![Latest Version](https://img.shields.io/github/release/ArkEcosystem/ruby-crypto.svg)](https://github.com/ArkEcosystem/ruby-crypto/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # Installation
