@@ -4,7 +4,7 @@ module ArkEcosystem
     MAJOR = 0
 
     # Current minor release.
-    MINOR = 1
+    MINOR = 2
 
     # Current patch level.
     PATCH = 0
