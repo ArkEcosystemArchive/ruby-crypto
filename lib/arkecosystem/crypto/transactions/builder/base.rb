@@ -35,6 +35,7 @@ module ArkEcosystem
 
           def second_sign(second_passphrase)
             @transaction.second_sign(second_passphrase)
+            @transaction.id = @transaction.get_id
             self
           end
 
