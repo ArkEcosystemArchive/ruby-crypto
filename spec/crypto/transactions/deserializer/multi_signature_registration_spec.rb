@@ -19,6 +19,7 @@ describe ArkEcosystem::Crypto::Transactions::Deserializers::MultiSignatureRegist
       expect(actual.asset[:multisignature][:keysgroup]).to eq(transaction.data.asset.multisignature.keysgroup)
       expect(actual.asset[:multisignature][:min]).to eq(transaction.data.asset.multisignature.min)
       expect(actual.asset[:multisignature][:lifetime]).to eq(transaction.data.asset.multisignature.lifetime)
+      expect(actual.verify).to eq(true)
     end
   end
 end

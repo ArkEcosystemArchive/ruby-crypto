@@ -47,7 +47,9 @@ module ArkEcosystem
           bytes << [@timestamp].pack('V')
           bytes << [@sender_public_key].pack('H*')
 
-          bytes << if @recipient_id
+          skip_recipient_id = @type == ArkEcosystem::Crypto::Enums::Types::SECOND_SIGNATURE_REGISTRATION ||
+                        @type == ArkEcosystem::Crypto::Enums::Types::MULTI_SIGNATURE_REGISTRATION
+          bytes << if @recipient_id && !skip_recipient_id
           BTC::Base58.data_from_base58check(@recipient_id)
           else
             [].pack('x21')
