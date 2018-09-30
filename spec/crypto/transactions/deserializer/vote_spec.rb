@@ -16,6 +16,7 @@ describe ArkEcosystem::Crypto::Transactions::Deserializers::Vote do
       expect(actual.recipient_id).to eq(transaction.data.recipientId)
       expect(actual.id).to eq(transaction.data.id)
       expect(actual.asset[:votes]).to eq(transaction.data.asset.votes)
+      expect(actual.verify).to eq(true)
     end
 
     it 'should be ok if signed with a second passphrase' do
@@ -35,6 +36,7 @@ describe ArkEcosystem::Crypto::Transactions::Deserializers::Vote do
       expect(actual.recipient_id).to eq(transaction.data.recipientId)
       expect(actual.id).to eq(transaction.data.id)
       expect(actual.asset[:votes]).to eq(transaction.data.asset.votes)
+      expect(actual.verify).to eq(true)
     end
   end
 end

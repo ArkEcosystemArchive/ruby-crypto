@@ -15,6 +15,7 @@ describe ArkEcosystem::Crypto::Transactions::Deserializers::DelegateRegistration
       expect(actual.amount).to eq(transaction.data.amount)
       expect(actual.id).to eq(transaction.data.id)
       expect(actual.asset[:delegate][:username]).to eq(transaction.data.asset.delegate.username)
+      expect(actual.verify).to eq(true)
     end
 
     it 'should be ok if signed with a second passphrase' do
@@ -33,6 +34,7 @@ describe ArkEcosystem::Crypto::Transactions::Deserializers::DelegateRegistration
       expect(actual.amount).to eq(transaction.data.amount)
       expect(actual.id).to eq(transaction.data.id)
       expect(actual.asset[:delegate][:username]).to eq(transaction.data.asset.delegate.username)
+      expect(actual.verify).to eq(true)
     end
   end
 end

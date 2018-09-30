@@ -15,6 +15,7 @@ describe ArkEcosystem::Crypto::Transactions::Deserializers::SecondSignatureRegis
       expect(actual.amount).to eq(transaction.data.amount)
       expect(actual.id).to eq(transaction.data.id)
       expect(actual.asset[:signature][:public_key]).to eq(transaction.data.asset.signature.publicKey)
+      expect(actual.verify).to eq(true)
 
       # special case as the type 1 transaction itself has no recipientId
       expect(actual.recipient_id).to eq(ArkEcosystem::Crypto::Identities::Address.from_public_key(actual.sender_public_key, actual.network))

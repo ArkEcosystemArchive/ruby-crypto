@@ -18,6 +18,7 @@ describe ArkEcosystem::Crypto::Transactions::Deserializers::Transfer do
       expect(actual.signature).to eq(transaction.data.signature)
       expect(actual.vendor_field).to eq(transaction.data.vendorField)
       expect(actual.id).to eq(transaction.data.id)
+      expect(actual.verify).to eq(true)
     end
 
     it 'should be ok if signed with a second passphrase' do
@@ -39,6 +40,7 @@ describe ArkEcosystem::Crypto::Transactions::Deserializers::Transfer do
       expect(actual.sign_signature).to eq(transaction.data.signSignature)
       expect(actual.vendor_field).to eq(transaction.data.vendorField)
       expect(actual.id).to eq(transaction.data.id)
+      expect(actual.verify).to eq(true)
     end
 
     it 'should be ok if signed with a passphrase and vendor field' do
@@ -58,6 +60,7 @@ describe ArkEcosystem::Crypto::Transactions::Deserializers::Transfer do
       expect(actual.signature).to eq(transaction.data.signature)
       expect(actual.vendor_field).to eq(transaction.data.vendorField)
       expect(actual.id).to eq(transaction.data.id)
+      expect(actual.verify).to eq(true)
     end
 
     it 'should be ok if signed with a second passphrase and vendor field' do
@@ -78,6 +81,7 @@ describe ArkEcosystem::Crypto::Transactions::Deserializers::Transfer do
       expect(actual.sign_signature).to eq(transaction.data.signSignature)
       expect(actual.vendor_field).to eq(transaction.data.vendorField)
       expect(actual.id).to eq(transaction.data.id)
+      expect(actual.verify).to eq(true)
     end
 
     it 'should be ok if signed with a passphrase and vendor field hex' do
@@ -97,6 +101,7 @@ describe ArkEcosystem::Crypto::Transactions::Deserializers::Transfer do
       expect(actual.recipient_id).to eq(transaction.data.recipientId)
       expect(actual.signature).to eq(transaction.data.signature)
       expect(actual.id).to eq(transaction.data.id)
+      expect(actual.verify).to eq(true)
     end
 
     it 'should be ok if signed with a second passphrase and vendor field hex' do
@@ -117,6 +122,7 @@ describe ArkEcosystem::Crypto::Transactions::Deserializers::Transfer do
       expect(actual.signature).to eq(transaction.data.signature)
       expect(actual.sign_signature).to eq(transaction.data.signSignature)
       expect(actual.id).to eq(transaction.data.id)
+      expect(actual.verify).to eq(true)
     end
   end
 end
