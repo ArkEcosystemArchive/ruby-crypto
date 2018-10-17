@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
        - image: circleci/ruby:2.4.1-node-browsers
-    working_directory: ~/arkecosystem/client
+    working_directory: ~/arkecosystem/crypto
 
     steps:
       - checkout
