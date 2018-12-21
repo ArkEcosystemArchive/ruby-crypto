@@ -22,6 +22,7 @@ module ArkEcosystem
             @transaction.vendor_field = nil
             @transaction.timestamp = ArkEcosystem::Crypto::Utils::Slot.get_time
             @transaction.asset = {}
+            @transaction.signature = nil
           end
 
           def sign(passphrase)
@@ -58,9 +59,9 @@ module ArkEcosystem
               amount: @transaction.amount,
               vendorField: @transaction.vendor_field,
               timestamp: @transaction.timestamp,
-              asset: @transaction.asset
+              asset: @transaction.asset,
+              signature: @transaction.signature
             }
-
           end
 
           def to_json
