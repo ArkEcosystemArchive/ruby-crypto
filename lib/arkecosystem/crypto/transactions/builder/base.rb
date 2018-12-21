@@ -46,6 +46,35 @@ module ArkEcosystem
           def second_verify(second_public_key)
             @transaction.second_verify(second_public_key)
           end
+
+          def to_params
+            {
+              type: @transaction.type,
+              amount: @transaction.amount,
+              fee: @transaction.fee,
+              vendorField: @transaction.vendor_field,
+              timestamp: @transaction.timestamp,
+              recipientId: @transaction.recipient_id,
+              senderPublicKey: @transaction.sender_public_key,
+              signature: @transaction.signature,
+              id: @transaction.id
+            }.tap do |h|
+              h[:asset] = @transaction.asset.deep_transform_keys { |key| snake_case_to_camel_case(key) } if @transaction.asset.any?
+              h[:signSignature] = @transaction.sign_signature if @transaction.sign_signature
+            end
+          end
+
+          def to_json
+            to_params.to_json
+          end
+
+          private
+
+          def snake_case_to_camel_case(string)
+            string.to_s.split('_').enum_for(:each_with_index).collect do |s, index|
+              index.zero? ? s : s.capitalize
+            end.join
+          end
         end
       end
     end
