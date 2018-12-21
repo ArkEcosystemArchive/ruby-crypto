@@ -46,6 +46,25 @@ module ArkEcosystem
           def second_verify(second_public_key)
             @transaction.second_verify(second_public_key)
           end
+
+          def to_params
+            {
+              type: @transaction.type,
+              fee: @transaction.fee,
+              senderPublicKey: @transaction.sender_public_key,
+              recipientId: @transaction.recipient_id,
+              amount: @transaction.amount,
+              vendorField: @transaction.vendor_field,
+              timestamp: @transaction.timestamp,
+              asset: @transaction.asset
+            }
+
+          end
+
+          def to_json
+            to_params.to_json
+          end
+
         end
       end
     end
