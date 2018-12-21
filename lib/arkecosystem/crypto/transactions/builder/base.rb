@@ -14,6 +14,7 @@ module ArkEcosystem
           def initialize
             @transaction = ArkEcosystem::Crypto::Transactions::Transaction.new()
             @transaction.type = type
+            @transaction.id = nil
             @transaction.fee = ArkEcosystem::Crypto::Configuration::Fee.get(@transaction.type)
             @transaction.sender_public_key = nil
             @transaction.recipient_id = nil
@@ -50,6 +51,7 @@ module ArkEcosystem
           def to_params
             {
               type: @transaction.type,
+              id: @transaction.id,
               fee: @transaction.fee,
               senderPublicKey: @transaction.sender_public_key,
               recipientId: @transaction.recipient_id,
