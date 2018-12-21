@@ -50,31 +50,21 @@ module ArkEcosystem
           def to_params
             {
               type: @transaction.type,
-              amount: @transaction.amount,
               fee: @transaction.fee,
+              senderPublicKey: @transaction.sender_public_key,
+              recipientId: @transaction.recipient_id,
+              amount: @transaction.amount,
               vendorField: @transaction.vendor_field,
               timestamp: @transaction.timestamp,
-              recipientId: @transaction.recipient_id,
-              senderPublicKey: @transaction.sender_public_key,
-              signature: @transaction.signature,
-              id: @transaction.id
-            }.tap do |h|
-              h[:asset] = @transaction.asset.deep_transform_keys { |key| snake_case_to_camel_case(key) } if @transaction.asset.any?
-              h[:signSignature] = @transaction.sign_signature if @transaction.sign_signature
-            end
+              asset: @transaction.asset
+            }
+
           end
 
           def to_json
             to_params.to_json
           end
 
-          private
-
-          def snake_case_to_camel_case(string)
-            string.to_s.split('_').enum_for(:each_with_index).collect do |s, index|
-              index.zero? ? s : s.capitalize
-            end.join
-          end
         end
       end
     end

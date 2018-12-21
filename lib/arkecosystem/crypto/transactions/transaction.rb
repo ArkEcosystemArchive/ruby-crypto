@@ -165,6 +165,35 @@ module ArkEcosystem
         def deserialize(serialized)
           ArkEcosystem::Crypto::Transactions::Deserializer.new(serialized).deserialize
         end
+
+        def to_params
+          {
+            type: type,
+            amount: amount,
+            fee: fee,
+            vendorField: vendor_field,
+            timestamp: timestamp,
+            recipientId: recipient_id,
+            senderPublicKey: sender_public_key,
+            signature: signature,
+            id: id
+          }.tap do |h|
+            h[:asset] = asset.deep_transform_keys { |key| snake_case_to_camel_case(key) } if asset.any?
+            h[:signSignature] = sign_signature if sign_signature
+          end
+        end
+
+        def to_json
+          to_params.to_json
+        end
+
+        private
+
+        def snake_case_to_camel_case(string)
+          string.to_s.split('_').enum_for(:each_with_index).collect do |s, index|
+            index.zero? ? s : s.capitalize
+          end.join
+        end
       end
     end
   end
