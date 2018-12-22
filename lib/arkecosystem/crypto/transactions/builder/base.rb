@@ -14,6 +14,7 @@ module ArkEcosystem
           def initialize
             @transaction = ArkEcosystem::Crypto::Transactions::Transaction.new()
             @transaction.type = type
+            @transaction.id = nil
             @transaction.fee = ArkEcosystem::Crypto::Configuration::Fee.get(@transaction.type)
             @transaction.sender_public_key = nil
             @transaction.recipient_id = nil
@@ -21,6 +22,7 @@ module ArkEcosystem
             @transaction.vendor_field = nil
             @transaction.timestamp = ArkEcosystem::Crypto::Utils::Slot.get_time
             @transaction.asset = {}
+            @transaction.signature = nil
           end
 
           def sign(passphrase)
@@ -50,15 +52,16 @@ module ArkEcosystem
           def to_params
             {
               type: @transaction.type,
+              id: @transaction.id,
               fee: @transaction.fee,
               senderPublicKey: @transaction.sender_public_key,
               recipientId: @transaction.recipient_id,
               amount: @transaction.amount,
               vendorField: @transaction.vendor_field,
               timestamp: @transaction.timestamp,
-              asset: @transaction.asset
+              asset: @transaction.asset,
+              signature: @transaction.signature
             }
-
           end
 
           def to_json
