@@ -55,7 +55,7 @@ module ArkEcosystem
             [].pack('x21')
           end
 
-          if @vendor_field
+          if @vendor_field && @vendor_field.size <= 255
             bytes << @vendor_field
 
             if @vendor_field.size < 64
